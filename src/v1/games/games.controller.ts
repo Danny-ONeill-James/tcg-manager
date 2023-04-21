@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { CreateGameDto } from './dto/create-game.dto';
 
 @Controller('games')
 export class GamesController {
@@ -13,7 +14,7 @@ export class GamesController {
   }
 
   @Post()
-  create(): string {
+  create(@Body() createGameDto: CreateGameDto) {
     return 'This action adds a new game';
   }
 }
