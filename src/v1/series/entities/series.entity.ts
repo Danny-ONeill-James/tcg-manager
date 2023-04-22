@@ -1,6 +1,7 @@
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { GameEntity } from 'src/v1/games/entities/game.entity';
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { SetEntity } from 'src/v1/sets/entities/set.entity';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'series_entity' })
 export class SeriesEntity extends ParanoidEntity {
@@ -18,4 +19,7 @@ export class SeriesEntity extends ParanoidEntity {
 
   @ManyToOne(() => GameEntity, (gameEntity) => gameEntity.series)
   game: GameEntity;
+
+  @OneToMany(() => SetEntity, (setEntity) => setEntity.series)
+  set: SetEntity;
 }
