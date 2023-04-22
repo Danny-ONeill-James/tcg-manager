@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+
 import { CreateGameDto } from './dto/create-game.dto';
 import { GamesService } from './games.service';
 import { IGame } from './interface/games.interface';
@@ -29,6 +30,7 @@ export class GamesController {
 
   @Delete(':id')
   delete(@Param() id: string) {
+
     return this.gameService.remove(id);
   }
 }

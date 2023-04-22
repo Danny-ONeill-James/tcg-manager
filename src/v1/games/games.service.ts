@@ -26,6 +26,7 @@ export class GamesService {
     return this.gameRepository.findOne({
       where: { slug: _slug },
     });
+
   }
 
   async create(createGameDto: CreateGameDto) {
