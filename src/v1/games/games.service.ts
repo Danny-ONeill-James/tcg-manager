@@ -9,11 +9,12 @@ import { IGame } from './interface/games.interface';
 export class GamesService {
   constructor(
     @InjectRepository(GameEntity)
-    private usersRepository: Repository<GameEntity>,
+    private gameRepository: Repository<GameEntity>,
   ) {}
 
   async findOne(id: string): Promise<IGame> {
     const game: IGame = {
+      id: 'one',
       name: 'Returned Single Game',
       slug: 'slughere',
       image: 'image Locations',
@@ -25,11 +26,13 @@ export class GamesService {
   async findAll(): Promise<IGame[]> {
     const games: IGame[] = [
       {
+        id: 'one',
         name: 'Returned Game 1',
         slug: 'slughere',
         image: 'image Locations',
       },
       {
+        id: 'two',
         name: 'Returned Game 2',
         slug: 'slughere2',
         image: 'image Locations2',
@@ -40,12 +43,10 @@ export class GamesService {
   }
 
   async create(createGameDto: CreateGameDto) {
-    const game: IGame = {
-      name: 'Returned Single Game',
-      slug: 'slughere',
-      image: 'image Locations',
-    };
+    const newGame = this.gameRepository.create({
+      ...createGameDto,
+    });
 
-    return game;
+    return this.gameRepository.save(newGame);
   }
 }
