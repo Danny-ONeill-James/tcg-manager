@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SeriesEntity } from '../series/entities/series.entity';
+import { SetEntity } from './entities/set.entity';
 import { SetsController } from './sets.controller';
 import { SetsService } from './sets.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeriesEntity])],
+  imports: [TypeOrmModule.forFeature([SetEntity])],
   controllers: [SetsController],
   providers: [SetsService],
 })
