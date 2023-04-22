@@ -12,8 +12,8 @@ export class GamesController {
     return this.gameService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<IGame> {
+  @Get('findOne')
+  findOne(@Body('id') id: string): Promise<IGame> {
     return this.gameService.findOne(id);
   }
 
