@@ -8,7 +8,7 @@ export class GamesController {
   constructor(private gameService: GamesService) {}
 
   @Get()
-  findAll() {
+  findAll(): Promise<IGame[]> {
     return this.gameService.findAll();
   }
 
