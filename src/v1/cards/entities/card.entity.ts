@@ -1,10 +1,10 @@
-import { CardEntity } from 'src/v1/cards/entities/card.entity';
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { SeriesEntity } from 'src/v1/series/entities/series.entity';
+import { SetEntity } from 'src/v1/sets/entities/set.entity';
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'set_entity' })
-export class SetEntity extends ParanoidEntity {
+@Entity({ name: 'card_entity' })
+export class CardEntity extends ParanoidEntity {
   @PrimaryColumn('uuid')
   id: string;
 
@@ -17,9 +17,6 @@ export class SetEntity extends ParanoidEntity {
   @Column()
   image: string;
 
-  @ManyToOne(() => SeriesEntity, (seriesEntity) => seriesEntity.set)
-  series: SeriesEntity;
-
-  @OneToMany(() => CardEntity, (cardEntity) => cardEntity.set)
-  card: CardEntity;
+  @ManyToOne(() => SetEntity, (setEntity) => setEntity.card)
+  set: SetEntity;
 }
