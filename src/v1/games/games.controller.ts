@@ -1,20 +1,24 @@
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
+import { GamesService } from './games.service';
+import { IGame } from './interface/games.interface';
 
 @Controller('games')
 export class GamesController {
+  constructor(private gameService: GamesService) {}
+
   @Get()
-  findAll(@Req() request: Request): string {
-    return 'This action returns all games';
+  findAll() {
+    return this.gameService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `This action returns a #${id} game`;
+  findOne(@Param('id') id: string): Promise<IGame> {
+    return this.gameService.findOne(id);
   }
 
   @Post()
-  create(@Body() createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+  create(@Body() createGameDto: CreateGameDto): Promise<IGame> {
+    return this.gameService.create(createGameDto);
   }
 }
