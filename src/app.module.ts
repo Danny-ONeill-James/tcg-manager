@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { GameEntity } from './v1/games/entities/game.entity';
 import { GamesModule } from './v1/games/games.module';
 import { PublicModule } from './v1/public/public.module';
+import { SeriesModule } from './v1/series/series.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PublicModule } from './v1/public/public.module';
     }),
     PublicModule,
     GamesModule,
+    SeriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
