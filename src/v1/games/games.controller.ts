@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Req,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { GamesService } from './games.service';
 import { IGame } from './interface/games.interface';
