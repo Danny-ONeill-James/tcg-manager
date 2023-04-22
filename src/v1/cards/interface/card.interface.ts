@@ -7,5 +7,6 @@ export interface ICard {
   name: string;
   slug: string;
   image: string;
+  cardNumber: string;
   set: SetEntity;
 }
