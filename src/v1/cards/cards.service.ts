@@ -55,6 +55,13 @@ export class CardsService {
     return this.cardRepository.save(newCard);
   }
 
+  async update(inputId: string, updateCardDto: CreateCardDto) {
+    const updateCardWithEditDetails: CreateCardDto = {
+      ...updateCardDto,
+    };
+    return this.cardRepository.update(inputId, updateCardWithEditDetails);
+  }
+
   async remove(id: string) {
     return this.cardRepository.delete(id);
   }

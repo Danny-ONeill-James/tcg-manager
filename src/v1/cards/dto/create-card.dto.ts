@@ -4,5 +4,6 @@ export class CreateCardDto {
   name: string;
   slug: string;
   image: string;
+  cardNumber: string;
   set: SetEntity;
 }
