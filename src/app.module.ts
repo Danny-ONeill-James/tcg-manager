@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { GameEntity } from './v1/games/entities/game.entity';
 import { GamesModule } from './v1/games/games.module';
 import { PublicModule } from './v1/public/public.module';
 
@@ -16,7 +17,7 @@ import { PublicModule } from './v1/public/public.module';
       username: process.env.MYSQL_USERNAME,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [],
+      entities: [GameEntity],
       synchronize: true,
     }),
     PublicModule,
