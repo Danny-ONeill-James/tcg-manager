@@ -12,15 +12,10 @@ export class GamesService {
     private gameRepository: Repository<GameEntity>,
   ) {}
 
-  async findOne(id: string): Promise<IGame> {
-    const game: IGame = {
-      id: 'one',
-      name: 'Returned Single Game',
-      slug: 'slughere',
-      image: 'image Locations',
-    };
-
-    return game;
+  async findOne(_id: string): Promise<IGame> {
+    return this.gameRepository.findOne({
+      where: { id: _id },
+    });
   }
 
   async findAll(): Promise<IGame[]> {
@@ -33,5 +28,9 @@ export class GamesService {
     });
 
     return this.gameRepository.save(newGame);
+  }
+
+  async remove(id: string) {
+    return this.gameRepository.delete(id);
   }
 }
