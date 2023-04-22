@@ -12,14 +12,20 @@ export class GamesService {
     private gameRepository: Repository<GameEntity>,
   ) {}
 
+  async findAll(): Promise<IGame[]> {
+    return this.gameRepository.find();
+  }
+
   async findOne(_id: string): Promise<IGame> {
     return this.gameRepository.findOne({
       where: { id: _id },
     });
   }
 
-  async findAll(): Promise<IGame[]> {
-    return this.gameRepository.find();
+  findOneBySlug(_slug: string): Promise<IGame> {
+    return this.gameRepository.findOne({
+      where: { slug: _slug },
+    });
   }
 
   async create(createGameDto: CreateGameDto) {
