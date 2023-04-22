@@ -9,43 +9,28 @@ import { IGame } from './interface/games.interface';
 export class GamesService {
   constructor(
     @InjectRepository(GameEntity)
-    private usersRepository: Repository<GameEntity>,
+    private gameRepository: Repository<GameEntity>,
   ) {}
 
-  async findOne(id: string): Promise<IGame> {
-    const game: IGame = {
-      name: 'Returned Single Game',
-      slug: 'slughere',
-      image: 'image Locations',
-    };
-
-    return game;
+  async findOne(_id: string): Promise<IGame> {
+    return this.gameRepository.findOne({
+      where: { id: _id },
+    });
   }
 
   async findAll(): Promise<IGame[]> {
-    const games: IGame[] = [
-      {
-        name: 'Returned Game 1',
-        slug: 'slughere',
-        image: 'image Locations',
-      },
-      {
-        name: 'Returned Game 2',
-        slug: 'slughere2',
-        image: 'image Locations2',
-      },
-    ];
-
-    return games;
+    return this.gameRepository.find();
   }
 
   async create(createGameDto: CreateGameDto) {
-    const game: IGame = {
-      name: 'Returned Single Game',
-      slug: 'slughere',
-      image: 'image Locations',
-    };
+    const newGame = this.gameRepository.create({
+      ...createGameDto,
+    });
 
-    return game;
+    return this.gameRepository.save(newGame);
+  }
+
+  async remove(id: string) {
+    return this.gameRepository.delete(id);
   }
 }
