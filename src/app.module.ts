@@ -28,13 +28,13 @@ import { SetsModule } from './v1/sets/sets.module';
       entities: [CardEntity, GameEntity, SeriesEntity, SetEntity],
       synchronize: true,
     }),
+    CardsModule,
     PublicModule,
     GamesModule,
     SeriesModule,
     SetsModule,
-    CardsModule,
   ],
-  controllers: [AppController, CardsController],
-  providers: [AppService, CardsService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
