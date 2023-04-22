@@ -42,7 +42,7 @@ export class CardsService {
           slug: _slug,
         },
       },
-      relations: { set: true },
+      relations: { set: { series: { game: true } } },
     });
 
     return cards;
