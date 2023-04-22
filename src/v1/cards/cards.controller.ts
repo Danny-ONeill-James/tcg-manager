@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { ICard } from './interface/card.interface';
@@ -30,6 +38,11 @@ export class CardsController {
   @Post()
   create(@Body() createCardDto: CreateCardDto): Promise<ICard> {
     return this.cardsService.create(createCardDto);
+  }
+
+  @Put(':id')
+  update(@Body() updateGameDto: CreateCardDto, @Param('id') inputId: string) {
+    return this.cardsService.update(inputId, updateGameDto);
   }
 
   @Delete(':id')
