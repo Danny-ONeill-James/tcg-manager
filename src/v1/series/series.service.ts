@@ -13,18 +13,20 @@ export class SeriesService {
   ) {}
 
   async findAll(): Promise<ISeries[]> {
-    return this.seriesRepository.find();
+    return this.seriesRepository.find({ relations: { game: true } });
   }
 
   async findOne(_id: string): Promise<ISeries> {
     return this.seriesRepository.findOne({
       where: { id: _id },
+      relations: { game: true },
     });
   }
 
   findOneBySlug(_slug: string): Promise<ISeries> {
     return this.seriesRepository.findOne({
       where: { slug: _slug },
+      relations: { game: true },
     });
   }
 
