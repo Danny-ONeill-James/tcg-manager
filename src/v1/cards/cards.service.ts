@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { SetEntity } from '../sets/entities/set.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { CardEntity } from './entities/card.entity';
 import { ICard } from './interface/card.interface';
@@ -10,6 +11,8 @@ export class CardsService {
   constructor(
     @InjectRepository(CardEntity)
     private cardRepository: Repository<CardEntity>,
+    @InjectRepository(SetEntity)
+    private setRepository: Repository<SetEntity>,
   ) {}
 
   async findAll(): Promise<ICard[]> {
@@ -30,6 +33,19 @@ export class CardsService {
       where: { slug: _slug },
       relations: { set: { series: { game: true } } },
     });
+  }
+
+  async findAllCardsInSet(_slug: string): Promise<ICard[]> {
+    const cards: ICard[] = await this.cardRepository.find({
+      where: {
+        set: {
+          slug: _slug,
+        },
+      },
+      relations: { set: true },
+    });
+
+    return cards;
   }
 
   async create(createCardDto: CreateCardDto) {
