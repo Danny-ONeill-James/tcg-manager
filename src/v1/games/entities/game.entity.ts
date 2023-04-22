@@ -1,5 +1,6 @@
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { SeriesEntity } from 'src/v1/series/entities/series.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'game_entity' })
 export class GameEntity extends ParanoidEntity {
@@ -14,4 +15,7 @@ export class GameEntity extends ParanoidEntity {
 
   @Column()
   image: string;
+
+  @OneToMany(() => SeriesEntity, (seriesEntity) => seriesEntity.game)
+  series: SeriesEntity;
 }
