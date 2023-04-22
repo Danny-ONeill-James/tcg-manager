@@ -22,6 +22,11 @@ export class CardsController {
     return this.cardsService.findOneBySlug(slug);
   }
 
+  @Get('findCardsInSet/:slug')
+  findAllCardsInSet(@Param('slug') slug: string): Promise<ICard[]> {
+    return this.cardsService.findAllCardsInSet(slug);
+  }
+
   @Post()
   create(@Body() createCardDto: CreateCardDto): Promise<ICard> {
     return this.cardsService.create(createCardDto);
