@@ -24,22 +24,7 @@ export class GamesService {
   }
 
   async findAll(): Promise<IGame[]> {
-    const games: IGame[] = [
-      {
-        id: 'one',
-        name: 'Returned Game 1',
-        slug: 'slughere',
-        image: 'image Locations',
-      },
-      {
-        id: 'two',
-        name: 'Returned Game 2',
-        slug: 'slughere2',
-        image: 'image Locations2',
-      },
-    ];
-
-    return games;
+    return this.gameRepository.find();
   }
 
   async create(createGameDto: CreateGameDto) {
