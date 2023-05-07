@@ -4,13 +4,17 @@ import { GameEntity } from 'src/v1/games/entities/game.entity';
 import { GamesService } from 'src/v1/games/games.service';
 import { IGame } from 'src/v1/games/interface/games.interface';
 import { CreateSeriesDto } from 'src/v1/series/dto/create-series.dto';
+import { SeriesEntity } from 'src/v1/series/entities/series.entity';
 import { ISeries } from 'src/v1/series/interface/series.interface';
 import { SeriesService } from 'src/v1/series/series.service';
+import { CreateSetDto } from 'src/v1/sets/dto/create-set.dto';
 import { ISet } from 'src/v1/sets/interface/sets.interface';
+import { SetsService } from 'src/v1/sets/sets.service';
 
 @Injectable()
 export class PokemonCardsApiService {
   constructor(
+    private setService: SetsService,
     private seriesService: SeriesService,
     private gameService: GamesService,
   ) {}
@@ -26,13 +30,12 @@ export class PokemonCardsApiService {
     const returnedData = await this.sendAxiosCall(url, config);
 
     let formattedSetData: ISet[] = [] as ISet[];
-
     let gamePokemon: IGame = await this.gameService.findOneBySlug('pokemontcg');
-
     let seriesList: ISeries[] = [] as ISeries[];
     seriesList = await this.seriesService.findAll();
 
     returnedData.data.forEach(async (item) => {
+      //Check Series
       if (seriesList.find(({ name }) => name === item.series)) {
         console.log(item.series + ' found.');
       } else {
@@ -52,6 +55,29 @@ export class PokemonCardsApiService {
         this.seriesService.create(newSeries);
 
         console.log(item.series + ' Not found.');
+      }
+
+      //Check Set
+
+      if (await this.setService.findOne(item.id)) {
+        console.log('Found: ' + item.id);
+      } else {
+        console.log('Did not find: ' + item.id);
+        const seriesForSet: ISeries = await this.seriesService.findOneBySlug(
+          item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
+        );
+        let newSet: CreateSetDto = {
+          name: item.name,
+          slug: item.id,
+          logo: item.images.logo,
+          symbol: item.images.symbol,
+          printedQuantity: item.printedTotal,
+          totalQuantity: item.total,
+          releaseDate: item.releaseDate,
+          series: seriesForSet as SeriesEntity,
+        };
+        this.setService.create(newSet);
+        console.log('Created: ' + item.id);
       }
 
       formattedSetData.push({

@@ -7,10 +7,11 @@ import { PokemonCardsApiController } from './pokemon-cards-api.controller';
 import { PokemonCardsApiService } from './pokemon-cards-api.service';
 import { GamesService } from 'src/v1/games/games.service';
 import { GameEntity } from 'src/v1/games/entities/game.entity';
+import { SetsService } from 'src/v1/sets/sets.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SetEntity, SeriesEntity, GameEntity])],
   controllers: [PokemonCardsApiController],
-  providers: [PokemonCardsApiService, SeriesService, GamesService],
+  providers: [PokemonCardsApiService, SeriesService, GamesService, SetsService],
 })
 export class PokemonCardsApiModule {}
