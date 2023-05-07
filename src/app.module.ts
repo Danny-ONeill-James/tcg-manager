@@ -14,6 +14,9 @@ import { SeriesEntity } from './v1/series/entities/series.entity';
 import { SeriesModule } from './v1/series/series.module';
 import { SetEntity } from './v1/sets/entities/set.entity';
 import { SetsModule } from './v1/sets/sets.module';
+import { PokemonCardsApiController } from './api-connections/pokemon-cards-api/pokemon-cards-api.controller';
+import { PokemonCardsApiService } from './api-connections/pokemon-cards-api/pokemon-cards-api.service';
+import { PokemonCardsApiModule } from './api-connections/pokemon-cards-api/pokemon-cards-api.module';
 
 @Module({
   imports: [
@@ -33,8 +36,9 @@ import { SetsModule } from './v1/sets/sets.module';
     GamesModule,
     SeriesModule,
     SetsModule,
+    PokemonCardsApiModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, PokemonCardsApiController],
+  providers: [AppService, PokemonCardsApiService],
 })
 export class AppModule {}
