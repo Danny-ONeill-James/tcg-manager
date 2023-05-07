@@ -7,7 +7,6 @@ export class CommandController {
 
   @Get('/update/sets/')
   checkAllSets() {
-    this.commandService.checkAllSets();
-    return 'to check all sets';
+    return this.commandService.checkAllSets();
   }
 }
