@@ -22,7 +22,7 @@ export class PokemonCardsApiService {
     return await axios
       .get(url, config)
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => console.log(err));
   }

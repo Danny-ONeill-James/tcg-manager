@@ -20,5 +20,7 @@ export class CommandService {
     console.log(`API: ${apiResults}`);
     console.log(`Database: ${databaseResults}`);
     //TODO: if new Set add
+
+    return await apiResults;
   }
 }
