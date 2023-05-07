@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
-import { CardEntity } from 'src/v1/cards/entities/card.entity';
+import { SetEntity } from 'src/v1/sets/entities/set.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class PokemonCardsApiService {
   constructor(
-    @InjectRepository(CardEntity)
-    private cardsRepository: Repository<CardEntity>,
+    @InjectRepository(SetEntity)
+    private cardsRepository: Repository<SetEntity>,
   ) {}
 
   async getSetsList() {
