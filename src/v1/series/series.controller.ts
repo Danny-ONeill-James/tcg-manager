@@ -27,6 +27,14 @@ export class SeriesController {
     return this.seriesService.create(createGameDto);
   }
 
+  @Delete()
+  async deleteAll() {
+    const allSeries = await this.seriesService.findAll();
+    allSeries.forEach((element) => {
+      return this.seriesService.remove(element.id);
+    });
+  }
+
   @Delete(':id')
   delete(@Param() id: string) {
     return this.seriesService.remove(id);

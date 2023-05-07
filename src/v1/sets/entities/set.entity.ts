@@ -15,7 +15,19 @@ export class SetEntity extends ParanoidEntity {
   slug: string;
 
   @Column()
-  image: string;
+  logo: string;
+
+  @Column()
+  symbol: string;
+
+  @Column()
+  printedQuantity: number;
+
+  @Column()
+  totalQuantity: number;
+
+  @Column()
+  releaseDate: Date;
 
   @ManyToOne(() => SeriesEntity, (seriesEntity) => seriesEntity.set)
   series: SeriesEntity;
