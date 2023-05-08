@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { CardsService } from 'src/v1/cards/cards.service';
+import { CreateCardDto } from 'src/v1/cards/dto/create-card.dto';
 import { GameEntity } from 'src/v1/games/entities/game.entity';
 import { GamesService } from 'src/v1/games/games.service';
 import { IGame } from 'src/v1/games/interface/games.interface';
@@ -8,15 +10,17 @@ import { SeriesEntity } from 'src/v1/series/entities/series.entity';
 import { ISeries } from 'src/v1/series/interface/series.interface';
 import { SeriesService } from 'src/v1/series/series.service';
 import { CreateSetDto } from 'src/v1/sets/dto/create-set.dto';
+import { SetEntity } from 'src/v1/sets/entities/set.entity';
 import { ISet } from 'src/v1/sets/interface/sets.interface';
 import { SetsService } from 'src/v1/sets/sets.service';
 
 @Injectable()
 export class PokemonCardsApiService {
   constructor(
+    private cardsService: CardsService,
+    private gameService: GamesService,
     private setService: SetsService,
     private seriesService: SeriesService,
-    private gameService: GamesService,
   ) {}
 
   async updateSeriesAndSets() {
@@ -93,8 +97,37 @@ export class PokemonCardsApiService {
     return formattedSetData;
   }
 
-  updateCardsInSet(setId: string) {
-    throw new Error('Method not implemented.');
+  async updateCardsInSet(setId: string) {
+    const config = {
+      headers: {
+        'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
+      },
+    };
+    const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}`;
+
+    const returnedData = await this.sendAxiosCall(url, config);
+
+    const inputSet = await this.setService.findOne(setId);
+
+    //Check if card exsists in this set
+    returnedData.data.forEach(async (card) => {
+      if (await this.cardsService.findOneBySlug(card.id)) {
+        console.log('Found: ' + card.name + '//TODO: Update');
+      } else {
+        console.log('Did not find: ' + card.name);
+        let newCard: CreateCardDto = {
+          name: card.name,
+          slug: card.id,
+          image: card.images.large,
+          cardNumber: card.number,
+          set: inputSet as SetEntity,
+        };
+        this.cardsService.create(newCard);
+        console.log('Created: ' + card.name);
+      }
+    });
+
+    return returnedData;
   }
 
   async sendAxiosCall(_url, _config) {

@@ -9,4 +9,9 @@ export class CommandController {
   checkAllSets() {
     return this.commandService.checkAllSets();
   }
+
+  @Get('/update/cardsInSet/')
+  checkAllCardsInSet() {
+    return this.commandService.checkCardsInSet();
+  }
 }

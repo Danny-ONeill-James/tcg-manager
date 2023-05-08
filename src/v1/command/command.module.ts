@@ -9,9 +9,13 @@ import { SeriesService } from '../series/series.service';
 import { SeriesEntity } from '../series/entities/series.entity';
 import { GameEntity } from '../games/entities/game.entity';
 import { GamesService } from '../games/games.service';
+import { CardsService } from '../cards/cards.service';
+import { CardEntity } from '../cards/entities/card.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SetEntity, SeriesEntity, GameEntity])],
+  imports: [
+    TypeOrmModule.forFeature([SetEntity, SeriesEntity, GameEntity, CardEntity]),
+  ],
   controllers: [CommandController],
   providers: [
     CommandService,
@@ -19,6 +23,7 @@ import { GamesService } from '../games/games.service';
     SetsService,
     SeriesService,
     GamesService,
+    CardsService,
   ],
 })
 export class CommandModule {}
