@@ -25,6 +25,13 @@ export class CardsController {
     return this.cardsService.findOne(id);
   }
 
+  @Get('activeSearch/:searchTerm')
+  findForActiveSearch(
+    @Param('searchTerm') searchTerm: string,
+  ): Promise<ICard[]> {
+    return this.cardsService.findForActiveSearch(searchTerm);
+  }
+
   @Get('findOneBySlug/:slug')
   findOneBySlug(@Param('slug') slug: string): Promise<ICard> {
     return this.cardsService.findOneBySlug(slug);

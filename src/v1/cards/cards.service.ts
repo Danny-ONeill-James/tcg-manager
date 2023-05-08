@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { SetEntity } from '../sets/entities/set.entity';
 import { CreateCardDto } from './dto/create-card.dto';
 import { CardEntity } from './entities/card.entity';
@@ -24,6 +24,13 @@ export class CardsService {
   async findOne(_id: string): Promise<ICard> {
     return this.cardRepository.findOne({
       where: { id: _id },
+      relations: { set: { series: { game: true } } },
+    });
+  }
+
+  async findForActiveSearch(_searchTerm: string): Promise<ICard[]> {
+    return this.cardRepository.find({
+      where: { name: Like(`%${_searchTerm}%`) },
       relations: { set: { series: { game: true } } },
     });
   }

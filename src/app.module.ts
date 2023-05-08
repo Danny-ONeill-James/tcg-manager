@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PokemonCardsApiModule } from './api-connections/pokemon-cards-api/pokemon-cards-api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CardsController } from './v1/cards/cards.controller';
 import { CardsModule } from './v1/cards/cards.module';
-import { CardsService } from './v1/cards/cards.service';
 import { CardEntity } from './v1/cards/entities/card.entity';
+import { CommandModule } from './v1/command/command.module';
 import { GameEntity } from './v1/games/entities/game.entity';
 import { GamesModule } from './v1/games/games.module';
 import { PublicModule } from './v1/public/public.module';
@@ -33,6 +33,8 @@ import { SetsModule } from './v1/sets/sets.module';
     GamesModule,
     SeriesModule,
     SetsModule,
+    PokemonCardsApiModule,
+    CommandModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,6 +6,10 @@ export interface ISet {
   updatedAt?: Date;
   name: string;
   slug: string;
-  image: string;
-  series: SeriesEntity;
+  logo: string;
+  symbol: string;
+  printedQuantity: number;
+  totalQuantity: number;
+  releaseDate?: Date;
+  series?: SeriesEntity;
 }
