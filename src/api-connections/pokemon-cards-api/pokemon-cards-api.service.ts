@@ -19,7 +19,7 @@ export class PokemonCardsApiService {
     private gameService: GamesService,
   ) {}
 
-  async getSetsList() {
+  async updateSeriesAndSets() {
     const config = {
       headers: {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,

@@ -11,17 +11,7 @@ export class CommandService {
   ) {}
 
   async checkAllSets() {
-    //TODO: Get the results form the API
-    const apiResults = await this.pokemonCardsApiService.getSetsList();
-    //TODO: get the results from the database
-    const databaseResults: ISet[] = await this.setsService.findAll();
-    //TODO: Converty both into same format
-
-    //TODO compare results
-    //console.log(`API: ${apiResults}`);
-    //console.log(`Database: ${databaseResults}`);
-    //TODO: if new Set add
-
+    const apiResults = await this.pokemonCardsApiService.updateSeriesAndSets();
     return await apiResults;
   }
 }
