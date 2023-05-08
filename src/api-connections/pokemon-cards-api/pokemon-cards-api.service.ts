@@ -93,6 +93,10 @@ export class PokemonCardsApiService {
     return formattedSetData;
   }
 
+  updateCardsInSet(setId: string) {
+    throw new Error('Method not implemented.');
+  }
+
   async sendAxiosCall(_url, _config) {
     return await axios
       .get(_url, _config)

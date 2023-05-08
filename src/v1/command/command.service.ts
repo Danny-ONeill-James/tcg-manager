@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PokemonCardsApiService } from 'src/api-connections/pokemon-cards-api/pokemon-cards-api.service';
-import { ISet } from '../sets/interface/sets.interface';
-import { SetsService } from '../sets/sets.service';
 
 @Injectable()
 export class CommandService {
-  constructor(
-    private pokemonCardsApiService: PokemonCardsApiService,
-    private setsService: SetsService,
-  ) {}
+  constructor(private pokemonCardsApiService: PokemonCardsApiService) {}
 
   async checkAllSets() {
-    const apiResults = await this.pokemonCardsApiService.updateSeriesAndSets();
+    await this.pokemonCardsApiService.updateSeriesAndSets();
+    return 'Updated all sets and Series In the Pokemon Game';
+  }
+
+  async checkCardsInSet() {
+    const setId: string = 'base1';
+    const apiResults = await this.pokemonCardsApiService.updateCardsInSet(
+      setId,
+    );
     return await apiResults;
   }
 }
