@@ -11,7 +11,7 @@ export class CommandService {
   }
 
   async checkCardsInSet() {
-    const setId: string = 'base1';
+    const setId: string = 'swsh8';
     const apiResults = await this.pokemonCardsApiService.updateCardsInSet(
       setId,
     );

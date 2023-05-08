@@ -103,13 +103,30 @@ export class PokemonCardsApiService {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
       },
     };
-    const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}`;
+    let page = 1;
+    const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}&page=${page}`;
 
-    const returnedData = await this.sendAxiosCall(url, config);
-
+    let returnedData = await this.sendAxiosCall(url, config);
+    console.log(
+      'Amounbt: ' + returnedData.count + ' / ' + returnedData.totalCount,
+    );
     const inputSet = await this.setService.findOne(setId);
 
-    //Check if card exsists in this set
+    this.CheckCards(returnedData, inputSet);
+
+    if (returnedData.count < returnedData.totalCount) {
+      console.log('There are more pages');
+      page++;
+      const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}&page=${page}`;
+
+      returnedData = await this.sendAxiosCall(url, config);
+      this.CheckCards(returnedData, inputSet);
+    }
+
+    return returnedData;
+  }
+
+  async CheckCards(returnedData, inputSet) {
     returnedData.data.forEach(async (card) => {
       if (await this.cardsService.findOneBySlug(card.id)) {
         console.log('Found: ' + card.name + '//TODO: Update');
@@ -126,8 +143,6 @@ export class PokemonCardsApiService {
         console.log('Created: ' + card.name);
       }
     });
-
-    return returnedData;
   }
 
   async sendAxiosCall(_url, _config) {
