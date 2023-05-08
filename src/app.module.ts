@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PokemonCardsApiModule } from './api-connections/pokemon-cards-api/pokemon-cards-api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './system/users/users.module';
 import { CardsModule } from './v1/cards/cards.module';
 import { CardEntity } from './v1/cards/entities/card.entity';
 import { CommandModule } from './v1/command/command.module';
@@ -35,6 +36,7 @@ import { SetsModule } from './v1/sets/sets.module';
     SetsModule,
     PokemonCardsApiModule,
     CommandModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
