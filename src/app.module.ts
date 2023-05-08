@@ -16,6 +16,7 @@ import { SeriesModule } from './v1/series/series.module';
 import { SetEntity } from './v1/sets/entities/set.entity';
 import { SetsModule } from './v1/sets/sets.module';
 import { AuthModule } from './system/auth/auth.module';
+import { UserEntity } from './system/users/entities/user.entity';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { AuthModule } from './system/auth/auth.module';
       username: process.env.MYSQL_USERNAME,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [CardEntity, GameEntity, SeriesEntity, SetEntity],
+      entities: [CardEntity, GameEntity, SeriesEntity, SetEntity, UserEntity],
       synchronize: true,
     }),
     CardsModule,

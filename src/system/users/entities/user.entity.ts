@@ -7,10 +7,10 @@ export class UserEntity extends ParanoidEntity {
   id: string;
 
   @Column()
-  name: string;
+  username: string;
 
   @Column()
-  slug: string;
+  password: string;
 
   @Column()
   image: string;
