@@ -15,6 +15,7 @@ import { SeriesEntity } from './v1/series/entities/series.entity';
 import { SeriesModule } from './v1/series/series.module';
 import { SetEntity } from './v1/sets/entities/set.entity';
 import { SetsModule } from './v1/sets/sets.module';
+import { AuthModule } from './system/auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SetsModule } from './v1/sets/sets.module';
     PokemonCardsApiModule,
     CommandModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
