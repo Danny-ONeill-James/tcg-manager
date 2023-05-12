@@ -17,7 +17,14 @@ export class CardsService {
 
   async findAll(): Promise<ICard[]> {
     return this.cardRepository.find({
-      relations: { set: { series: { game: true } } },
+      relations: {
+        set: {
+          series: {
+            game: true,
+          },
+        },
+        stock: true,
+      },
     });
   }
 

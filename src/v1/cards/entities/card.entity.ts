@@ -1,11 +1,16 @@
-import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { SetEntity } from 'src/v1/sets/entities/set.entity';
 import { StockEntity } from 'src/v1/stock/entities/stock.entity';
-import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'Card' })
-export class CardEntity extends ParanoidEntity {
-  @PrimaryColumn('uuid')
+export class CardEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()

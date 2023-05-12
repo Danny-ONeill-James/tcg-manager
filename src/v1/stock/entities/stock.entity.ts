@@ -3,7 +3,7 @@ import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'Stock' })
-export class StockEntity extends ParanoidEntity {
+export class StockEntity {
   @PrimaryColumn('uuid')
   id: string;
 
