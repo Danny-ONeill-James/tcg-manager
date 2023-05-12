@@ -23,7 +23,6 @@ export class CardsService {
             game: true,
           },
         },
-        stock: true,
       },
     });
   }

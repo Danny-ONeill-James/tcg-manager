@@ -1,13 +1,13 @@
 import { CardEntity } from 'src/v1/cards/entities/card.entity';
 import { ECondition } from 'src/v1/cards/enums/quality.enum';
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'Stock' })
 export class StockEntity {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => CardEntity, (cardEntity) => cardEntity.stock)
+  @ManyToOne(() => CardEntity, (cardEntity) => cardEntity.stock)
   card: CardEntity;
 
   @Column()

@@ -4,7 +4,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -28,6 +28,6 @@ export class CardEntity {
   @ManyToOne(() => SetEntity, (setEntity) => setEntity.card)
   set: SetEntity;
 
-  @OneToOne(() => StockEntity, (stockEntity) => stockEntity.card)
+  @OneToMany(() => StockEntity, (stockEntity) => stockEntity.card)
   stock: StockEntity;
 }
