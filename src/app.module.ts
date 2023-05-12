@@ -17,6 +17,9 @@ import { SetEntity } from './v1/sets/entities/set.entity';
 import { SetsModule } from './v1/sets/sets.module';
 import { AuthModule } from './system/auth/auth.module';
 import { UserEntity } from './system/users/entities/user.entity';
+import { StockController } from './v1/stock/stock.controller';
+import { StockModule } from './v1/stock/stock.module';
+import { StockEntity } from './v1/stock/entities/stock.entity';
 
 @Module({
   imports: [
@@ -28,7 +31,14 @@ import { UserEntity } from './system/users/entities/user.entity';
       username: process.env.MYSQL_USERNAME,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [CardEntity, GameEntity, SeriesEntity, SetEntity, UserEntity],
+      entities: [
+        CardEntity,
+        GameEntity,
+        SeriesEntity,
+        SetEntity,
+        UserEntity,
+        StockEntity,
+      ],
       synchronize: true,
     }),
     AuthModule,
@@ -40,6 +50,7 @@ import { UserEntity } from './system/users/entities/user.entity';
     SetsModule,
     SeriesModule,
     UsersModule,
+    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
