@@ -97,27 +97,25 @@ export class PokemonCardsApiService {
     return formattedSetData;
   }
 
-  async updateCardsInSet(setId: string) {
+  async updateCardsInSet(setSlug: string) {
     const config = {
       headers: {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
       },
     };
     let page = 1;
-    const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}&page=${page}`;
+    const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
 
     let returnedData = await this.sendAxiosCall(url, config);
-    console.log(
-      'Amounbt: ' + returnedData.count + ' / ' + returnedData.totalCount,
-    );
-    const inputSet = await this.setService.findOne(setId);
+
+    const inputSet = await this.setService.findOneBySlug(setSlug);
 
     this.CheckCards(returnedData, inputSet);
 
     if (returnedData.count < returnedData.totalCount) {
       console.log('There are more pages');
       page++;
-      const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setId}&page=${page}`;
+      const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
 
       returnedData = await this.sendAxiosCall(url, config);
       this.CheckCards(returnedData, inputSet);
