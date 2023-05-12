@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { CommandService } from './command.service';
 
 @Controller('command')
@@ -10,8 +10,13 @@ export class CommandController {
     return this.commandService.checkAllSets();
   }
 
-  @Get('/update/cardsInSet/')
+  @Get('/update/cardsInSet/:slug')
+  checkCardsInSet(@Param('slug') slug: string) {
+    return this.commandService.checkCardsInSet(slug);
+  }
+
+  @Get('/update/allCardsInAllSets/')
   checkAllCardsInSet() {
-    return this.commandService.checkCardsInSet();
+    return this.commandService.checkAllCardsInAllSets();
   }
 }
