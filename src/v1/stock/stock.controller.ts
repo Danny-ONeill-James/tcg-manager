@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
-import { CreateStockDto } from './dto/createStock.dto';
+import { InputStockDto } from './dto/inputStock.dto';
 import { IStock } from './interface/stock.interface';
 import { StockService } from './stock.service';
-import { InputStockDto } from './dto/inputStock.dto';
-import { ICard } from '../cards/interface/card.interface';
 
 @Controller('stock')
 export class StockController {

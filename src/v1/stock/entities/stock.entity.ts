@@ -1,6 +1,12 @@
 import { CardEntity } from 'src/v1/cards/entities/card.entity';
 import { ECondition } from 'src/v1/cards/enums/quality.enum';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'Stock' })
 export class StockEntity {

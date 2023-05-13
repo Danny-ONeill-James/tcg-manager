@@ -8,7 +8,7 @@ export interface ICard {
   image: string;
   set: SetEntity;
   cardNumber: string;
-  stock?: StockEntity;
+  stock?: StockEntity[];
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
