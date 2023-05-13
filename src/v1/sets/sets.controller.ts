@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { SetsService } from './sets.service';
 import { ISet } from './interface/sets.interface';
-import { CreateSeriesDto } from '../series/dto/create-series.dto';
 import { CreateSetDto } from './dto/create-set.dto';
 
 @Controller('sets')

@@ -17,28 +17,35 @@ export class CardsService {
 
   async findAll(): Promise<ICard[]> {
     return this.cardRepository.find({
-      relations: { set: { series: { game: true } } },
+      relations: {
+        set: {
+          series: {
+            game: true,
+          },
+        },
+        stock: true,
+      },
     });
   }
 
   async findOne(_id: string): Promise<ICard> {
     return this.cardRepository.findOne({
       where: { id: _id },
-      relations: { set: { series: { game: true } } },
+      relations: { set: { series: { game: true } }, stock: true },
     });
   }
 
   async findForActiveSearch(_searchTerm: string): Promise<ICard[]> {
     return this.cardRepository.find({
       where: { name: Like(`%${_searchTerm}%`) },
-      relations: { set: { series: { game: true } } },
+      relations: { set: { series: { game: true } }, stock: true },
     });
   }
 
   findOneBySlug(_slug: string): Promise<ICard> {
     return this.cardRepository.findOne({
       where: { slug: _slug },
-      relations: { set: { series: { game: true } } },
+      relations: { set: { series: { game: true } }, stock: true },
     });
   }
 
@@ -49,7 +56,7 @@ export class CardsService {
           slug: _slug,
         },
       },
-      relations: { set: { series: { game: true } } },
+      relations: { set: { series: { game: true } }, stock: true },
     });
 
     return cards;
