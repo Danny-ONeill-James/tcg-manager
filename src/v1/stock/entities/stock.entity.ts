@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,7 +14,7 @@ export class StockEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => CardEntity, (cardEntity) => cardEntity.stock)
+  @ManyToOne(() => CardEntity, (cardEntity) => cardEntity.stock)
   card: CardEntity;
 
   @Column()

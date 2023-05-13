@@ -28,6 +28,6 @@ export class CardEntity {
   @ManyToOne(() => SetEntity, (setEntity) => setEntity.card)
   set: SetEntity;
 
-  @ManyToOne(() => StockEntity, (stockEntity) => stockEntity.card)
+  @OneToMany(() => StockEntity, (stockEntity) => stockEntity.card)
   stock: StockEntity[];
 }
