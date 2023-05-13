@@ -19,6 +19,7 @@ export class StockController {
 
   @Put()
   create(@Body() createStockDto: InputStockDto): Promise<IStock> {
+    console.log('Body: ' + JSON.stringify(createStockDto));
     return this.stockService.checkStock(createStockDto);
   }
 }

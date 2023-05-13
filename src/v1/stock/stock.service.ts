@@ -52,7 +52,7 @@ export class StockService {
       );
     } else {
       this.update(await inDatabase.id, inputStockDto.quantity);
-      console.log('Found, will update');
+      console.log('Found ' + _card.name + ', will update');
     }
 
     return null;
