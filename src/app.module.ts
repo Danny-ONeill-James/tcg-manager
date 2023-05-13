@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PokemonCardsApiModule } from './api-connections/pokemon-cards-api/pokemon-cards-api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './system/auth/auth.module';
+import { UserEntity } from './system/users/entities/user.entity';
 import { UsersModule } from './system/users/users.module';
 import { CardsModule } from './v1/cards/cards.module';
 import { CardEntity } from './v1/cards/entities/card.entity';
@@ -15,11 +17,9 @@ import { SeriesEntity } from './v1/series/entities/series.entity';
 import { SeriesModule } from './v1/series/series.module';
 import { SetEntity } from './v1/sets/entities/set.entity';
 import { SetsModule } from './v1/sets/sets.module';
-import { AuthModule } from './system/auth/auth.module';
-import { UserEntity } from './system/users/entities/user.entity';
-import { StockController } from './v1/stock/stock.controller';
-import { StockModule } from './v1/stock/stock.module';
 import { StockEntity } from './v1/stock/entities/stock.entity';
+import { StockModule } from './v1/stock/stock.module';
+import { SalesModule } from './v1/sales/sales.module';
 
 @Module({
   imports: [
@@ -47,10 +47,11 @@ import { StockEntity } from './v1/stock/entities/stock.entity';
     GamesModule,
     PokemonCardsApiModule,
     PublicModule,
+    SalesModule,
     SetsModule,
+    StockModule,
     SeriesModule,
     UsersModule,
-    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
