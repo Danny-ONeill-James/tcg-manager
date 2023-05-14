@@ -20,6 +20,9 @@ import { SetsModule } from './v1/sets/sets.module';
 import { StockEntity } from './v1/stock/entities/stock.entity';
 import { StockModule } from './v1/stock/stock.module';
 import { SalesModule } from './v1/sales/sales.module';
+import { SaleEntity } from './v1/sales/entities/sale.entity';
+import { SaleItemEntity } from './v1/sales/entities/saleItem.entity';
+import { TransactionEntity } from './v1/sales/entities/transaction.entity';
 
 @Module({
   imports: [
@@ -34,10 +37,13 @@ import { SalesModule } from './v1/sales/sales.module';
       entities: [
         CardEntity,
         GameEntity,
+        SaleEntity,
+        SaleItemEntity,
         SeriesEntity,
         SetEntity,
         UserEntity,
         StockEntity,
+        TransactionEntity,
       ],
       synchronize: true,
     }),
