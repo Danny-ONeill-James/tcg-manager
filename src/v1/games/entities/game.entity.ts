@@ -11,6 +11,9 @@ export class GameEntity extends ParanoidEntity {
   name: string;
 
   @Column()
+  description: string;
+
+  @Column()
   slug: string;
 
   @Column()
