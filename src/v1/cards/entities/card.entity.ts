@@ -4,10 +4,8 @@ import { StockEntity } from 'src/v1/stock/entities/stock.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
