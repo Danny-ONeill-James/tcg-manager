@@ -23,6 +23,7 @@ import { SalesModule } from './v1/sales/sales.module';
 import { SaleEntity } from './v1/sales/entities/sale.entity';
 import { SaleItemEntity } from './v1/sales/entities/saleItem.entity';
 import { TransactionEntity } from './v1/sales/entities/transaction.entity';
+import { MagicTheGatheringApiModule } from './api-connections/magic-the-gathering-api/magic-the-gathering-api.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { TransactionEntity } from './v1/sales/entities/transaction.entity';
     StockModule,
     SeriesModule,
     UsersModule,
+    MagicTheGatheringApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
