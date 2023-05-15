@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PokemonCardsApiService } from 'src/api-connections/pokemon-cards-api/pokemon-cards-api.service';
-import { SetsService } from '../sets/sets.service';
+import { MagicTheGatheringApiService } from 'src/api-connections/magic-the-gathering-api/magic-the-gathering-api.service';
 import { ISet } from '../sets/interface/sets.interface';
+import { SetsService } from '../sets/sets.service';
 
 @Injectable()
 export class CommandService {
   constructor(
     private pokemonCardsApiService: PokemonCardsApiService,
+    private magicTheGatheringApiService: MagicTheGatheringApiService,
     private setsService: SetsService,
   ) {}
 
   async checkAllSets(gameSlug: string) {
     await this.pokemonCardsApiService.updateSeriesAndSets(gameSlug);
-    return 'Updated all sets and Series In the Pokemon Game';
+    //TODO: complete mtg API import
+    //await this.magicTheGatheringApiService.updateMTGSeriesAndSets(gameSlug);
+    return 'Updated all sets and Series In the TCGs';
   }
 
   async checkAllCardsInAllSets() {
