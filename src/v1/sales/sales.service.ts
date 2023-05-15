@@ -1,0 +1,45 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateSaleDto } from './dto/sale.dto';
+import { CreateSaleItemDto } from './dto/saleItem.dto';
+import { SaleEntity } from './entities/sale.entity';
+import { ISale } from './interface/sale.interface';
+import { ISaleItem } from './interface/saleItem.interface';
+import { SaleItemEntity } from './entities/saleItem.entity';
+
+@Injectable()
+export class SalesService {
+  constructor(
+    @InjectRepository(SaleEntity)
+    private saleRepository: Repository<SaleEntity>,
+    @InjectRepository(SaleItemEntity)
+    private saleItemRepository: Repository<SaleItemEntity>,
+  ) {}
+
+  findAll(): Promise<ISale[]> {
+    return this.saleRepository.find({
+      relations: { saleItem: { card: true }, transaction: true },
+    });
+  }
+
+  async createSale(createSaleDto: CreateSaleDto): Promise<ISale> {
+    if (createSaleDto.user == null) {
+      //TODO: this should have a user attached throug auth
+    }
+
+    const newSale = this.saleRepository.create({
+      ...createSaleDto,
+    });
+    return this.saleRepository.save(newSale);
+  }
+
+  async createSaleItem(
+    createSaleItemDto: CreateSaleItemDto,
+  ): Promise<ISaleItem> {
+    const newSaleItem = this.saleItemRepository.create({
+      ...createSaleItemDto,
+    });
+    return this.saleItemRepository.save(newSaleItem);
+  }
+}

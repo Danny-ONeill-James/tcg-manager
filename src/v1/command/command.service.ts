@@ -10,8 +10,8 @@ export class CommandService {
     private setsService: SetsService,
   ) {}
 
-  async checkAllSets() {
-    await this.pokemonCardsApiService.updateSeriesAndSets();
+  async checkAllSets(gameSlug: string) {
+    await this.pokemonCardsApiService.updateSeriesAndSets(gameSlug);
     return 'Updated all sets and Series In the Pokemon Game';
   }
 

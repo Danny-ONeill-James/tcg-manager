@@ -5,9 +5,9 @@ import { CommandService } from './command.service';
 export class CommandController {
   constructor(private commandService: CommandService) {}
 
-  @Get('/update/sets/')
-  checkAllSets() {
-    return this.commandService.checkAllSets();
+  @Get('/update/sets/:gameSlug')
+  checkAllSets(@Param('gameSlug') gameSlug: string) {
+    return this.commandService.checkAllSets(gameSlug);
   }
 
   @Get('/update/cardsInSet/:slug')

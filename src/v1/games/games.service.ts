@@ -26,14 +26,12 @@ export class GamesService {
     return this.gameRepository.findOne({
       where: { slug: _slug },
     });
-
   }
 
   async create(createGameDto: CreateGameDto) {
     const newGame = this.gameRepository.create({
       ...createGameDto,
     });
-
     return this.gameRepository.save(newGame);
   }
 
