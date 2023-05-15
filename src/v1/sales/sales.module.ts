@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from 'src/system/users/entities/user.entity';
 import { CardEntity } from '../cards/entities/card.entity';
 import { SaleEntity } from './entities/sale.entity';
 import { SaleItemEntity } from './entities/saleItem.entity';
 import { TransactionEntity } from './entities/transaction.entity';
 import { SalesController } from './sales.controller';
 import { SalesService } from './sales.service';
-import { UserEntity } from 'src/system/users/entities/user.entity';
 
 @Module({
   imports: [
