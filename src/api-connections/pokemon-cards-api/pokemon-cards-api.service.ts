@@ -23,7 +23,7 @@ export class PokemonCardsApiService {
     private seriesService: SeriesService,
   ) {}
 
-  async updateSeriesAndSets() {
+  async updateSeriesAndSets(gameSlug: string) {
     const config = {
       headers: {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
@@ -34,7 +34,7 @@ export class PokemonCardsApiService {
     const returnedData = await this.sendAxiosCall(url, config);
 
     let formattedSetData: ISet[] = [] as ISet[];
-    let gamePokemon: IGame = await this.gameService.findOneBySlug('pokemontcg');
+    let gamePokemon: IGame = await this.gameService.findOneBySlug(gameSlug);
     let seriesList: ISeries[] = [] as ISeries[];
     seriesList = await this.seriesService.findAll();
 
