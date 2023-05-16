@@ -4,6 +4,6 @@ import { PublicService } from './public.service';
 
 @Module({
   controllers: [PublicController],
-  providers: [PublicService]
+  providers: [PublicService],
 })
 export class PublicModule {}

@@ -33,8 +33,8 @@ export class PokemonCardsApiService {
 
     const returnedData = await this.sendAxiosCall(url, config);
 
-    let formattedSetData: ISet[] = [] as ISet[];
-    let gamePokemon: IGame = await this.gameService.findOneBySlug(gameSlug);
+    const formattedSetData: ISet[] = [] as ISet[];
+    const gamePokemon: IGame = await this.gameService.findOneBySlug(gameSlug);
     let seriesList: ISeries[] = [] as ISeries[];
     seriesList = await this.seriesService.findAll();
 
@@ -43,7 +43,7 @@ export class PokemonCardsApiService {
       if (seriesList.find(({ name }) => name === item.series)) {
         console.log(item.series + ' found.');
       } else {
-        let newSeries: CreateSeriesDto = {
+        const newSeries: CreateSeriesDto = {
           name: item.series,
           slug: item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
           image: item.images.logo,
@@ -70,7 +70,7 @@ export class PokemonCardsApiService {
         const seriesForSet: ISeries = await this.seriesService.findOneBySlug(
           item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
         );
-        let newSet: CreateSetDto = {
+        const newSet: CreateSetDto = {
           name: item.name,
           slug: item.id,
           logo: item.images.logo,
@@ -130,7 +130,7 @@ export class PokemonCardsApiService {
         console.log('Found: ' + card.name + '//TODO: Update');
       } else {
         console.log('Did not find: ' + card.name);
-        let newCard: CreateCardDto = {
+        const newCard: CreateCardDto = {
           name: card.name,
           slug: card.id,
           image: card.images.large,

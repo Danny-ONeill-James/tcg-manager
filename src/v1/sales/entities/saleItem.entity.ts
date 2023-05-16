@@ -1,13 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { SaleEntity } from './sale.entity';
 import { CardEntity } from 'src/v1/cards/entities/card.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { SaleEntity } from './sale.entity';
 
 @Entity({ name: 'SaleItem' })
 export class SaleItemEntity {

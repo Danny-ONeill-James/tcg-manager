@@ -9,7 +9,9 @@ describe('MagicTheGatheringApiController', () => {
       controllers: [MagicTheGatheringApiController],
     }).compile();
 
-    controller = module.get<MagicTheGatheringApiController>(MagicTheGatheringApiController);
+    controller = module.get<MagicTheGatheringApiController>(
+      MagicTheGatheringApiController,
+    );
   });
 
   it('should be defined', () => {

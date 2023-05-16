@@ -9,7 +9,9 @@ describe('MagicTheGatheringApiService', () => {
       providers: [MagicTheGatheringApiService],
     }).compile();
 
-    service = module.get<MagicTheGatheringApiService>(MagicTheGatheringApiService);
+    service = module.get<MagicTheGatheringApiService>(
+      MagicTheGatheringApiService,
+    );
   });
 
   it('should be defined', () => {
