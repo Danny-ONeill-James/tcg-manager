@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UserEntity } from './entities/user.entity';
 import { IUser } from './interfaces/user.interface';
-import { async } from 'rxjs';
 
 export type User = any;
 

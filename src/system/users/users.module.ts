@@ -4,7 +4,6 @@ import { SaleEntity } from 'src/v1/sales/entities/sale.entity';
 import { UserEntity } from './entities/user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { SaleItemEntity } from 'src/v1/sales/entities/saleItem.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SaleEntity, UserEntity])],

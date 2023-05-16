@@ -9,7 +9,9 @@ describe('PokemonCardsApiController', () => {
       controllers: [PokemonCardsApiController],
     }).compile();
 
-    controller = module.get<PokemonCardsApiController>(PokemonCardsApiController);
+    controller = module.get<PokemonCardsApiController>(
+      PokemonCardsApiController,
+    );
   });
 
   it('should be defined', () => {
