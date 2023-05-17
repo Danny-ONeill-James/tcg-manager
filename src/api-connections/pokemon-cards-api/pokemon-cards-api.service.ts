@@ -34,57 +34,37 @@ export class PokemonCardsApiService {
     const returnedData = await this.sendAxiosCall(url, config);
 
     const formattedSetData: ISet[] = [] as ISet[];
-    const gamePokemon: IGame = await this.gameService.findOneBySlug(gameSlug);
+    const game: IGame = await this.gameService.findOneBySlug(gameSlug);
+
     let seriesList: ISeries[] = [] as ISeries[];
     seriesList = await this.seriesService.findAll();
 
+    let setsList: ISet[] = [] as ISet[];
+    setsList = await this.setService.findAll();
+
     returnedData.data.forEach(async (item) => {
       //Check Series
-      if (seriesList.find(({ name }) => name === item.series)) {
-        console.log(item.series + ' found.');
-      } else {
-        const newSeries: CreateSeriesDto = {
-          name: item.series,
-          slug: item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
-          image: item.images.logo,
-          game: gamePokemon as GameEntity,
-        };
-        seriesList.push({
-          id: '',
-          name: newSeries.name,
-          slug: newSeries.slug,
-          image: newSeries.image,
-          game: gamePokemon as GameEntity,
-        });
-        this.seriesService.create(newSeries);
-
-        console.log(item.series + ' Not found.');
-      }
+      seriesList = await this.CheckAndUpdateSeries(item, seriesList, game);
 
       //Check Set
+      console.log('Created: ' + item.id);
 
-      if (await this.setService.findOne(item.id)) {
-        console.log('Found: ' + item.id);
-      } else {
-        console.log('Did not find: ' + item.id);
-        const seriesForSet: ISeries = await this.seriesService.findOneBySlug(
-          item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
-        );
-        const newSet: CreateSetDto = {
-          name: item.name,
-          slug: item.id,
-          logo: item.images.logo,
-          symbol: item.images.symbol,
-          printedQuantity: item.printedTotal,
-          totalQuantity: item.total,
-          releaseDate: item.releaseDate,
-          series: seriesForSet as SeriesEntity,
-        };
-        this.setService.create(newSet);
-        console.log('Created: ' + item.id);
-      }
+      setsList = await this.CheckAndUpdateSet(item, setsList);
+    });
+    return null;
+  }
 
-      formattedSetData.push({
+  async CheckAndUpdateSet(item, setList: ISet[]) {
+    console.log('Set: ' + setList);
+    if (setList.find(({ name }) => name === item.set.name)) {
+      console.log(item.set.name + ' found.');
+    } else {
+      console.log('Did not find: ' + item.id);
+      const seriesForSet: ISeries = await this.seriesService.findOneBySlug(
+        item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
+      );
+      console.log('Item: ' + seriesForSet.name);
+      const newSet: CreateSetDto = {
         name: item.name,
         slug: item.id,
         logo: item.images.logo,
@@ -92,9 +72,46 @@ export class PokemonCardsApiService {
         printedQuantity: item.printedTotal,
         totalQuantity: item.total,
         releaseDate: item.releaseDate,
-      } as unknown as ISet);
-    });
-    return formattedSetData;
+        series: seriesForSet as SeriesEntity,
+      };
+      setList.push({
+        id: '',
+        name: newSet.name,
+        slug: newSet.slug,
+        symbol: newSet.symbol,
+        logo: newSet.logo,
+        totalQuantity: newSet.totalQuantity,
+        printedQuantity: newSet.printedQuantity,
+        series: seriesForSet as SeriesEntity,
+      });
+      this.setService.create(newSet);
+      console.log('Created: ' + item.id);
+    }
+    return setList;
+  }
+
+  async CheckAndUpdateSeries(item, seriesList: ISeries[], game) {
+    if (seriesList.find(({ name }) => name === item.series)) {
+      console.log(item.series + ' found.');
+    } else {
+      const newSeries: CreateSeriesDto = {
+        name: item.series,
+        slug: item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
+        image: item.images.logo,
+        game: game as GameEntity,
+      };
+      seriesList.push({
+        id: '',
+        name: newSeries.name,
+        slug: newSeries.slug,
+        image: newSeries.image,
+        game: game as GameEntity,
+      });
+      this.seriesService.create(newSeries);
+
+      console.log(item.series + ' Not found.');
+    }
+    return seriesList;
   }
 
   async updateCardsInSet(setSlug: string) {
