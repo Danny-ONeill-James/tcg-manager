@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateSaleDto } from './dto/sale.dto';
 import { CreateSaleItemDto } from './dto/saleItem.dto';
 import { ISale } from './interface/sale.interface';
@@ -37,5 +45,10 @@ export class SalesController {
     @Body() createSaleItemDto: CreateSaleItemDto,
   ): Promise<ISaleItem> {
     return this.salesService.createSaleItem(createSaleItemDto);
+  }
+
+  @Delete(':id')
+  deleteSale(@Param('id') id: string) {
+    return this.salesService.deleteSale(id);
   }
 }

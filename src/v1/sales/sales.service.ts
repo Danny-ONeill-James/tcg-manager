@@ -56,6 +56,12 @@ export class SalesService {
     }
   }
 
+  deleteSale(id: string): Promise<ISale> {
+    const returnDeleted = this.saleRepository.findOne({ where: { id } });
+    this.saleRepository.delete(id);
+    return returnDeleted;
+  }
+
   async createSale(createSaleDto: CreateSaleDto): Promise<ISale> {
     if (createSaleDto.user == null) {
       //TODO: this should have a user attached throug auth
