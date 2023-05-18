@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateSaleDto } from './dto/sale.dto';
 import { CreateSaleItemDto } from './dto/saleItem.dto';
 import { ISale } from './interface/sale.interface';
@@ -14,8 +14,8 @@ export class SalesController {
     return this.salesService.findAll();
   }
 
-  @Get('findOne')
-  findOne(@Body('id') id: string): Promise<ISale> {
+  @Get('findOne/:id')
+  findOne(@Param('id') id: string): Promise<ISale> {
     return this.salesService.findOne(id);
   }
 
