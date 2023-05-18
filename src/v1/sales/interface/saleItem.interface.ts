@@ -4,4 +4,5 @@ export interface ISaleItem {
   id: string;
   card: ICard;
   quantity: number;
+  price: number;
 }
