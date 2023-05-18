@@ -23,6 +23,13 @@ export class SalesService {
     });
   }
 
+  findOne(_id: string): Promise<ISale> {
+    return this.saleRepository.findOne({
+      where: { id: _id },
+      relations: { transaction: true, saleItem: { card: true } },
+    });
+  }
+
   async createSale(createSaleDto: CreateSaleDto): Promise<ISale> {
     if (createSaleDto.user == null) {
       //TODO: this should have a user attached throug auth

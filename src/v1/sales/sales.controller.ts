@@ -14,6 +14,11 @@ export class SalesController {
     return this.salesService.findAll();
   }
 
+  @Get('findOne')
+  findOne(@Body('id') id: string): Promise<ISale> {
+    return this.salesService.findOne(id);
+  }
+
   @Post('sale')
   createSale(@Body() createSaleDto: CreateSaleDto): Promise<ISale> {
     return this.salesService.createSale(createSaleDto);
