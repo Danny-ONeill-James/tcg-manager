@@ -16,6 +16,6 @@ export class SaleItemEntity {
   @Column()
   quantity: number;
 
-  @Column()
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
   price: number;
 }
