@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateSaleDto } from './dto/sale.dto';
 import { CreateSaleItemDto } from './dto/saleItem.dto';
 import { ISale } from './interface/sale.interface';
@@ -22,6 +22,14 @@ export class SalesController {
   @Post('sale')
   createSale(@Body() createSaleDto: CreateSaleDto): Promise<ISale> {
     return this.salesService.createSale(createSaleDto);
+  }
+
+  @Put(':id')
+  editOneSale(
+    @Param('id') id: string,
+    @Body() updatedSaleData: Partial<ISale>,
+  ): Promise<ISale> {
+    return this.salesService.editOneSale(id, updatedSaleData);
   }
 
   @Post('saleItem')

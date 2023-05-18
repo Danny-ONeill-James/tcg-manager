@@ -13,3 +13,13 @@ export class CreateSaleDto {
   transaction: TransactionEntity[];
   user?: UserEntity;
 }
+
+export class EditSaleDto {
+  id: string;
+  company?: ECompany;
+  status?: EStatus;
+  saleDate?: Date;
+  saleItem?: SaleItemEntity[];
+  transaction?: TransactionEntity[];
+  user?: UserEntity;
+}

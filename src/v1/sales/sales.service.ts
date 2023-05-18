@@ -30,6 +30,32 @@ export class SalesService {
     });
   }
 
+  async editOneSale(
+    id: string,
+    updatedSaleData: Partial<ISale>,
+  ): Promise<ISale> {
+    try {
+      const sale = await this.saleRepository.findOne({
+        where: { id },
+        relations: { transaction: true, saleItem: { card: true } },
+      });
+
+      if (!sale) {
+        throw new Error('Sale not found.');
+      }
+
+      // Update the sale properties with the provided updated data
+      Object.assign(sale, updatedSaleData);
+
+      // Save the updated sale
+      const updatedSale = await this.saleRepository.save(sale);
+
+      return updatedSale;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async createSale(createSaleDto: CreateSaleDto): Promise<ISale> {
     if (createSaleDto.user == null) {
       //TODO: this should have a user attached throug auth
