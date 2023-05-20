@@ -33,7 +33,6 @@ export class PokemonCardsApiService {
 
     const returnedData = await this.sendAxiosCall(url, config);
 
-    const formattedSetData: ISet[] = [] as ISet[];
     const game: IGame = await this.gameService.findOneBySlug(gameSlug);
 
     let seriesList: ISeries[] = [] as ISeries[];

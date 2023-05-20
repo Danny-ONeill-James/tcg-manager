@@ -4,9 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PokemonCardsApiModule } from './api-connections/pokemon-cards-api/pokemon-cards-api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './system/auth/auth.module';
 import { UserEntity } from './system/users/entities/user.entity';
-import { UsersModule } from './system/users/users.module';
 import { CardsModule } from './v1/cards/cards.module';
 import { CardEntity } from './v1/cards/entities/card.entity';
 import { CommandModule } from './v1/command/command.module';
@@ -24,6 +22,8 @@ import { SaleEntity } from './v1/sales/entities/sale.entity';
 import { SaleItemEntity } from './v1/sales/entities/saleItem.entity';
 import { TransactionEntity } from './v1/sales/entities/transaction.entity';
 import { MagicTheGatheringApiModule } from './api-connections/magic-the-gathering-api/magic-the-gathering-api.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
