@@ -11,8 +11,14 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const { password, ...result } = user;
+
+    const newResult = {
+      name: result.username,
+      image: result.image,
+    };
+    console.log('New Result: ', newResult);
     // TODO: Generate a JWT and return it here
     // instead of the user object
-    return result;
+    return newResult;
   }
 }
