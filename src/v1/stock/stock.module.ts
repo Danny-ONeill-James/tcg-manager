@@ -6,9 +6,17 @@ import { StockEntity } from './entities/stock.entity';
 import { StockController } from './stock.controller';
 import { StockService } from './stock.service';
 import { SetEntity } from '../sets/entities/set.entity';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CardEntity, SetEntity, StockEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      CardEntity,
+      SetEntity,
+      StockEntity,
+      VendorEntity,
+    ]),
+  ],
   controllers: [StockController],
   providers: [StockService, CardsService],
 })

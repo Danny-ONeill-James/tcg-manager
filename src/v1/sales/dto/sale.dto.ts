@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/system/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { SaleItemEntity } from '../entities/saleItem.entity';
 import { TransactionEntity } from '../entities/transaction.entity';
 import { ECompany } from '../enums/company.enum';
