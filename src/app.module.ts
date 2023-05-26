@@ -24,6 +24,7 @@ import { TransactionEntity } from './v1/sales/entities/transaction.entity';
 import { MagicTheGatheringApiModule } from './api-connections/magic-the-gathering-api/magic-the-gathering-api.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { VendorsModule } from './vendors/vendors.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { UsersModule } from './users/users.module';
     SeriesModule,
     UsersModule,
     MagicTheGatheringApiModule,
+    VendorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
