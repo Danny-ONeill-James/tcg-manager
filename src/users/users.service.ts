@@ -9,6 +9,8 @@ export class UsersService {
     {
       userId: 1,
       username: 'john',
+      image:
+        'https://res.cloudinary.com/deftmtx9e/image/upload/v1676545362/More%20From%20Games/siteLogo/mark_dulotp.png',
       password: 'changeme',
     },
     {
