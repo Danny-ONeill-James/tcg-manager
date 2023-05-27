@@ -23,21 +23,25 @@ export class GamesController {
     return this.gameService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get('findOne')
   findOne(@Body('id') id: string): Promise<IGame> {
     return this.gameService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Get('findOneBySlug/:slug')
   findOneBySlug(@Param('slug') slug: string): Promise<IGame> {
     return this.gameService.findOneBySlug(slug);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createGameDto: CreateGameDto): Promise<IGame> {
     return this.gameService.create(createGameDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   delete(@Param() id: string) {
     return this.gameService.remove(id);
