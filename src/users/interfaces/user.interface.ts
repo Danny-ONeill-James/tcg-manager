@@ -5,4 +5,5 @@ export interface IUser {
   image: string;
   createdAt?: Date;
   updatedAt?: Date;
+  access_token?: string;
 }
