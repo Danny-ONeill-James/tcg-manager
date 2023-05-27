@@ -1,13 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 
 import { CreateGameDto } from './dto/create-game.dto';
 import { GamesService } from './games.service';
 import { IGame } from './interface/games.interface';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('games')
 export class GamesController {
   constructor(private gameService: GamesService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<IGame[]> {
     return this.gameService.findAll();
