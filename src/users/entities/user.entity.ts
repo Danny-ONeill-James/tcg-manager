@@ -10,6 +10,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
+import { EAccountType } from '../enums/accountTypes.enum';
 
 @Entity({ name: 'User' })
 export class UserEntity extends ParanoidEntity {
@@ -24,6 +25,9 @@ export class UserEntity extends ParanoidEntity {
 
   @Column()
   image: string;
+
+  @Column()
+  type: EAccountType;
 
   @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.owner)
   vendorOwner: VendorEntity;
