@@ -25,6 +25,7 @@ import { SetsModule } from './v1/sets/sets.module';
 import { StockEntity } from './v1/stock/entities/stock.entity';
 import { StockModule } from './v1/stock/stock.module';
 import { VendorEntity } from './vendors/entities/vendor.entity';
+import { VendorUsersEntity } from './vendors/entities/vendor.users.entity';
 import { VendorsModule } from './vendors/vendors.module';
 
 @Module({
@@ -48,6 +49,7 @@ import { VendorsModule } from './vendors/vendors.module';
         TransactionEntity,
         UserEntity,
         VendorEntity,
+        VendorUsersEntity,
       ],
       synchronize: true,
     }),

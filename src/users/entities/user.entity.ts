@@ -1,15 +1,7 @@
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
-import { SaleEntity } from 'src/v1/sales/entities/sale.entity';
-import { StockEntity } from 'src/v1/stock/entities/stock.entity';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryColumn,
-} from 'typeorm';
+import { VendorUsersEntity } from 'src/vendors/entities/vendor.users.entity';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { EAccountType } from '../enums/accountTypes.enum';
 
 @Entity({ name: 'User' })
@@ -29,9 +21,12 @@ export class UserEntity extends ParanoidEntity {
   @Column()
   type: EAccountType;
 
-  @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.owner)
+  @OneToMany(() => VendorEntity, (vendorEntity) => vendorEntity.owner)
   vendorOwner: VendorEntity;
 
-  @ManyToMany(() => VendorEntity, (vendorEntity) => vendorEntity.users)
-  vendorAccess: UserEntity[];
+  @OneToMany(
+    () => VendorUsersEntity,
+    (vendorUserEntity) => vendorUserEntity.user,
+  )
+  vendorAccess: VendorUsersEntity;
 }

@@ -12,7 +12,7 @@ export class StockEntity {
   @ManyToOne(() => CardEntity, (cardEntity) => cardEntity.stock)
   card: CardEntity;
 
-  @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.sale)
+  @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.stock)
   vendor: UserEntity;
 
   @Column()

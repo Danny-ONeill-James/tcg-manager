@@ -1,4 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateVendorDto } from './dtos/createVendor.dto';
+import { VendorsService } from './vendors.service';
+import { IVendor } from './interfaces/vendor.interface';
 
 @Controller('vendors')
-export class VendorsController {}
+export class VendorsController {
+  constructor(private vendorService: VendorsService) {}
+
+  @UseGuards(AuthGuard)
+  @Post()
+  create(@Body() createVendorDto: CreateVendorDto): Promise<IVendor> {
+    return this.vendorService.create(createVendorDto);
+  }
+}
