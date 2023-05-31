@@ -31,7 +31,7 @@ export class VendorsService {
 
   async getWhereOwner(id: string): Promise<IVendor[]> {
     const user: UserEntity = await this.userRepository.findOne({
-      where: { 'user.id': id },
+      where: { id: id },
       relations: { vendorOwner: true },
     });
 
