@@ -4,12 +4,16 @@ import { Repository } from 'typeorm';
 import { CreateSeriesDto } from './dto/create-series.dto';
 import { SeriesEntity } from './entities/series.entity';
 import { ISeries } from './interface/series.interface';
+import { GameEntity } from '../games/entities/game.entity';
+import { IGame } from '../games/interface/games.interface';
 
 @Injectable()
 export class SeriesService {
   constructor(
     @InjectRepository(SeriesEntity)
     private seriesRepository: Repository<SeriesEntity>,
+    @InjectRepository(GameEntity)
+    private gamesRepository: Repository<GameEntity>,
   ) {}
 
   async findAll(): Promise<ISeries[]> {
@@ -28,6 +32,17 @@ export class SeriesService {
       where: { slug: _slug },
       relations: { game: true },
     });
+  }
+
+  async findAllSeriesInGame(_slug: string): Promise<ISeries[]> {
+    const game: GameEntity = await this.gamesRepository.findOne({
+      where: { slug: _slug },
+      relations: { series: true },
+    });
+    console.log('Returned Game Object: ', game);
+    const series: ISeries[] = await game.series;
+    console.log('Series: ', series);
+    return series;
   }
 
   async create(createSeriesDto: CreateSeriesDto) {

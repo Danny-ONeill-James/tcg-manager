@@ -21,5 +21,5 @@ export class SeriesEntity extends ParanoidEntity {
   game: GameEntity;
 
   @OneToMany(() => SetEntity, (setEntity) => setEntity.series)
-  set: SetEntity;
+  set: SetEntity[];
 }

@@ -29,6 +29,13 @@ export class SeriesController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('findSeriesInGame/:slug')
+  findAllSeriesInGame(@Param('slug') slug: string): Promise<ISeries[]> {
+    console.log('Game input: ', slug);
+    return this.seriesService.findAllSeriesInGame(slug);
+  }
+
+  @UseGuards(AuthGuard)
   @Get('findOneBySlug/:slug')
   findOneBySlug(@Param('slug') slug: string): Promise<ISeries> {
     return this.seriesService.findOneBySlug(slug);
