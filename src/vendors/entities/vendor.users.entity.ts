@@ -1,6 +1,6 @@
 import { UserEntity } from 'src/users/entities/user.entity';
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
-import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { VendorEntity } from './vendor.entity';
 
 @Entity({ name: 'VendorUsers' })

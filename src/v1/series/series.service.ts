@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GameEntity } from '../games/entities/game.entity';
 import { CreateSeriesDto } from './dto/create-series.dto';
 import { SeriesEntity } from './entities/series.entity';
 import { ISeries } from './interface/series.interface';
-import { GameEntity } from '../games/entities/game.entity';
-import { IGame } from '../games/interface/games.interface';
 
 @Injectable()
 export class SeriesService {

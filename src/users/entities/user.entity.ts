@@ -1,7 +1,7 @@
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { VendorUsersEntity } from 'src/vendors/entities/vendor.users.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { EAccountType } from '../enums/accountTypes.enum';
 
 @Entity({ name: 'User' })

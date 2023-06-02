@@ -5,7 +5,6 @@ import { StockEntity } from 'src/v1/stock/entities/stock.entity';
 import {
   Column,
   Entity,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,

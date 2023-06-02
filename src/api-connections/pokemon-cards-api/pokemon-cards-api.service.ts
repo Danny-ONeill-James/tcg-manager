@@ -119,10 +119,10 @@ export class PokemonCardsApiService {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
       },
     };
-    let page = 1;
+    const page = 1;
     const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
 
-    let returnedData = await this.sendAxiosCall(url, config);
+    const returnedData = await this.sendAxiosCall(url, config);
 
     const inputSet = await this.setService.findOneBySlug(setSlug);
 

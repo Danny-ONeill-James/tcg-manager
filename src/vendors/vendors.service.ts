@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVendorDto } from './dtos/createVendor.dto';
-import { IVendor } from './interfaces/vendor.interface';
-import { VendorEntity } from './entities/vendor.entity';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UsersService } from 'src/users/users.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { IUser } from 'src/users/interfaces/user.interface';
+import { Repository } from 'typeorm';
+import { CreateVendorDto } from './dtos/createVendor.dto';
+import { VendorEntity } from './entities/vendor.entity';
+import { IVendor } from './interfaces/vendor.interface';
 
 @Injectable()
 export class VendorsService {
