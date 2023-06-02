@@ -19,6 +19,9 @@ export class VendorEntity extends ParanoidEntity {
   @Column()
   name: string;
 
+  @Column()
+  slug: string;
+
   @ManyToOne(() => UserEntity, (userEntity) => userEntity.vendorOwner)
   user: UserEntity;
 

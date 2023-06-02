@@ -17,6 +17,8 @@ export class VendorsService {
   ) {}
 
   async create(createVendorDto: CreateVendorDto): Promise<IVendor> {
+    createVendorDto.slug = createVendorDto.name.replace(/[^0-9a-z]/gi, '');
+
     const user: IUser = await this.userRepository.findOne({
       where: { id: createVendorDto.user },
     });

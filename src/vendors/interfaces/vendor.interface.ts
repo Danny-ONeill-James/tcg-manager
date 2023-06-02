@@ -9,6 +9,7 @@ export interface IVendor {
   updatedAt?: Date;
   name: string;
   owner?: User;
+  slug?: string;
   image?: string;
   sale?: SaleEntity[];
   stock?: StockEntity[];
