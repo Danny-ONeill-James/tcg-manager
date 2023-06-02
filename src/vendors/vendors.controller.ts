@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateVendorDto } from './dtos/createVendor.dto';
-import { VendorsService } from './vendors.service';
 import { IVendor } from './interfaces/vendor.interface';
+import { VendorsService } from './vendors.service';
 
 @Controller('vendors')
 export class VendorsController {
@@ -15,8 +15,9 @@ export class VendorsController {
   }
 
   @UseGuards(AuthGuard)
-  @Get()
-  getWhereOwner(@Body() id: string): Promise<IVendor[]> {
+  @Get(':id')
+  getWhereOwner(@Param('id') id: string) {
+    console.log('Id in controller: ' + id);
     return this.vendorService.getWhereOwner(id);
   }
 }

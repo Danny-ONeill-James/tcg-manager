@@ -18,30 +18,33 @@ export class VendorsService {
   ) {}
 
   async create(createVendorDto: CreateVendorDto): Promise<IVendor> {
-    const owner: IUser = await this.userRepository.findOne({
+    const user: IUser = await this.userRepository.findOne({
       where: { id: createVendorDto.owner },
     });
 
     const newVendor: VendorEntity = this.vendorRepository.create({
       ...createVendorDto,
-      owner,
+      user,
     });
     return this.vendorRepository.save(newVendor);
   }
 
-  async getWhereOwner(id: string): Promise<IVendor[]> {
-    const user: UserEntity = await this.userRepository.findOne({
-      where: { id: id },
+  async findOne(username: string): Promise<IUser> {
+    return this.userRepository.findOne({ where: { username } });
+  }
+
+  async getWhereOwner(_id: string): Promise<IVendor[]> {
+    console.log('Id in Service: ', _id);
+
+    const user = await this.userRepository.findOne({
+      where: { id: _id },
       relations: { vendorOwner: true },
     });
 
-    const vendors: IVendor[] = await this.vendorRepository.find({
-      where: { owner: user },
-      relations: { owner: true },
-    });
+    console.log('User: ', user);
 
     // TODO: get the vendors from owner
-
-    return (await vendors) as unknown as IVendor[];
+    //return null;
+    return (await user.vendorOwner) as unknown as IVendor[];
   }
 }

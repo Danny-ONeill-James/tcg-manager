@@ -21,8 +21,8 @@ export class UserEntity extends ParanoidEntity {
   @Column()
   type: EAccountType;
 
-  @OneToMany(() => VendorEntity, (vendorEntity) => vendorEntity.owner)
-  vendorOwner: VendorEntity;
+  @OneToMany(() => VendorEntity, (vendorEntity) => vendorEntity.user)
+  vendorOwner: VendorEntity[];
 
   @OneToMany(
     () => VendorUsersEntity,
