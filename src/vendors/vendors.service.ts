@@ -19,7 +19,7 @@ export class VendorsService {
 
   async create(createVendorDto: CreateVendorDto): Promise<IVendor> {
     const user: IUser = await this.userRepository.findOne({
-      where: { id: createVendorDto.owner },
+      where: { id: createVendorDto.user },
     });
 
     const newVendor: VendorEntity = this.vendorRepository.create({
