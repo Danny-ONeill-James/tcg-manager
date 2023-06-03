@@ -29,6 +29,13 @@ export class SetsController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('findSetsInSeries/:slug')
+  findSetsInSeries(@Param('slug') slug: string): Promise<ISet[]> {
+    console.log('Series input: ', slug);
+    return this.setsService.findSetsInSeries(slug);
+  }
+
+  @UseGuards(AuthGuard)
   @Get('findOneBySlug/:slug')
   findOneBySlug(@Param('slug') slug: string): Promise<ISet> {
     return this.setsService.findOneBySlug(slug);

@@ -29,7 +29,7 @@ export class SeriesService {
   findOneBySlug(_slug: string): Promise<ISeries> {
     return this.seriesRepository.findOne({
       where: { slug: _slug },
-      relations: { game: true },
+      relations: { game: true, set: true },
     });
   }
 
