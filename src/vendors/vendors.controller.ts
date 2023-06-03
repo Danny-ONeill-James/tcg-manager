@@ -16,12 +16,12 @@ export class VendorsController {
 
   @UseGuards(AuthGuard)
   @Get(':userId/:vendorSlug')
-  findOne(
+  findOneFromOwner(
     @Param('userId') userId: string,
     @Param('vendorSlug') vendorSlug: string,
   ): Promise<IVendor> {
     console.log('Id in controller: ' + userId);
-    return this.vendorService.findOne(userId, vendorSlug);
+    return this.vendorService.findOneFromOwner(userId, vendorSlug);
   }
 
   @UseGuards(AuthGuard)

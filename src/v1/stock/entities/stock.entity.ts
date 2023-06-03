@@ -13,7 +13,7 @@ export class StockEntity {
   card: CardEntity;
 
   @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.stock)
-  vendor: UserEntity;
+  vendor: VendorEntity;
 
   @Column()
   quantity: number;

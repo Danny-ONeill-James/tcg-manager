@@ -18,5 +18,6 @@ import { CardEntity } from './entities/card.entity';
   ],
   controllers: [CardsController],
   providers: [CardsService],
+  exports: [CardsService],
 })
 export class CardsModule {}

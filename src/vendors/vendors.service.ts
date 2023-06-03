@@ -30,7 +30,14 @@ export class VendorsService {
     return this.vendorRepository.save(newVendor);
   }
 
-  async findOne(_userId: string, vendorSlug: string): Promise<IVendor> {
+  async findOne(id) {
+    return this.vendorRepository.findOne(id);
+  }
+
+  async findOneFromOwner(
+    _userId: string,
+    vendorSlug: string,
+  ): Promise<IVendor> {
     const user = await this.userRepository.findOne({
       where: { id: _userId },
       relations: { vendorOwner: { stock: true } },

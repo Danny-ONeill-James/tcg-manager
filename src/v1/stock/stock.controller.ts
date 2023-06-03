@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { InputStockDto } from './dto/inputStock.dto';
 import { IStock } from './interface/stock.interface';
 import { StockService } from './stock.service';
-import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('stock')
 export class StockController {
@@ -21,7 +21,7 @@ export class StockController {
   }
 
   @UseGuards(AuthGuard)
-  @Put()
+  @Post()
   create(@Body() createStockDto: InputStockDto): Promise<IStock> {
     console.log('Body: ' + JSON.stringify(createStockDto));
     return this.stockService.checkStock(createStockDto);
