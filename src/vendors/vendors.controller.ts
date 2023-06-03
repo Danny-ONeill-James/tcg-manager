@@ -22,6 +22,13 @@ export class VendorsController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('owner/:id')
+  getWhereOwner(@Param('id') id: string) {
+    console.log('Id in controller 1: ' + id);
+    return this.vendorService.getWhereOwner(id);
+  }
+
+  @UseGuards(AuthGuard)
   @Get(':userId/:vendorSlug')
   findOneFromOwner(
     @Param('userId') userId: string,
@@ -29,12 +36,5 @@ export class VendorsController {
   ): Promise<IVendor> {
     console.log('Id in controller: ' + userId);
     return this.vendorService.findOneFromOwner(userId, vendorSlug);
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('/owner/:id')
-  getWhereOwner(@Param('id') id: string) {
-    console.log('Id in controller: ' + id);
-    return this.vendorService.getWhereOwner(id);
   }
 }

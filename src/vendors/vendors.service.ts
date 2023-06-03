@@ -60,10 +60,10 @@ export class VendorsService {
       relations: { vendorOwner: true },
     });
 
-    console.log('User: ', user);
+    // console.log('User: ', user);
 
     // TODO: get the vendors from owner
-    //return null;
+
     return (await user.vendorOwner) as unknown as IVendor[];
   }
 }
