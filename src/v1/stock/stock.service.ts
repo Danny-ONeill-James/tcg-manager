@@ -36,11 +36,11 @@ export class StockService {
 
   async checkStock(inputStockDto: InputStockDto): Promise<IStock> {
     const _card: ICard = await this.cardsService.findOne(inputStockDto.cardId);
-
+    console.log('Card', _card);
     const _vendor: IVendor = await this.vendorService.findOne(
       inputStockDto.vendorId,
     );
-
+    console.log('Vendor', _vendor);
     const inDatabase = await this.stockRepository.findOne({
       where: { card: { id: _card.id } },
     });

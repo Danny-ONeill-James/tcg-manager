@@ -30,8 +30,8 @@ export class VendorsService {
     return this.vendorRepository.save(newVendor);
   }
 
-  async findOne(id) {
-    return this.vendorRepository.findOne(id);
+  async findOne(id): Promise<IVendor> {
+    return this.vendorRepository.findOne({ where: { id } });
   }
 
   async findOneFromOwner(

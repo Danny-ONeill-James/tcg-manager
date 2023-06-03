@@ -9,6 +9,13 @@ export class VendorsController {
   constructor(private vendorService: VendorsService) {}
 
   @UseGuards(AuthGuard)
+  @Get(':vendorId')
+  findOne(@Param('vendorId') vendorId: string): Promise<IVendor> {
+    console.log('Id in controller: ' + vendorId);
+    return this.vendorService.findOne(vendorId);
+  }
+
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createVendorDto: CreateVendorDto): Promise<IVendor> {
     return this.vendorService.create(createVendorDto);
