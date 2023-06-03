@@ -13,5 +13,6 @@ import { CardEntity } from '../cards/entities/card.entity';
   ],
   controllers: [SeriesController],
   providers: [SeriesService],
+  exports: [SeriesService],
 })
 export class SeriesModule {}
