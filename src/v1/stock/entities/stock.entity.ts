@@ -1,6 +1,7 @@
-import { UserEntity } from 'src/system/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { CardEntity } from 'src/v1/cards/entities/card.entity';
 import { ECondition } from 'src/v1/cards/enums/quality.enum';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'Stock' })
@@ -11,8 +12,8 @@ export class StockEntity {
   @ManyToOne(() => CardEntity, (cardEntity) => cardEntity.stock)
   card: CardEntity;
 
-  @ManyToOne(() => UserEntity, (userEntity) => userEntity.sale)
-  user: UserEntity;
+  @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.stock)
+  vendor: VendorEntity;
 
   @Column()
   quantity: number;

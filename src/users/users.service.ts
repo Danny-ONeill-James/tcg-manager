@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dtos/createUser.dto';
+import { IUser } from './interfaces/user.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { VendorsService } from 'src/vendors/vendors.service';
+import { CreateVendorDto } from 'src/vendors/dtos/createVendor.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      image:
-        'https://res.cloudinary.com/deftmtx9e/image/upload/v1676545362/More%20From%20Games/siteLogo/mark_dulotp.png',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+    private vendorService: VendorsService,
+  ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findOne(username: string): Promise<IUser> {
+    return this.userRepository.findOne({ where: { username } });
+  }
+
+  async create(newUserDto: CreateUserDto): Promise<IUser> {
+    const newUser = this.userRepository.create({
+      ...newUserDto,
+    });
+
+    const newUserInserted = await this.userRepository.save(newUser);
+
+    const newPersonalVendor: CreateVendorDto = {
+      name: 'Personal Collection',
+      slug: 'PersonalCollection',
+      user: newUserInserted.id,
+    };
+
+    console.log('New Personal Vendor: ', newPersonalVendor);
+    await this.vendorService.create(newPersonalVendor);
+
+    console.log('New User: ', await newUserInserted);
+
+    return newUserInserted;
   }
 }

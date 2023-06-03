@@ -9,6 +9,9 @@ import { CreateStockDto } from './dto/createStock.dto';
 import { InputStockDto } from './dto/inputStock.dto';
 import { StockEntity } from './entities/stock.entity';
 import { IStock } from './interface/stock.interface';
+import { IVendor } from 'src/vendors/interfaces/vendor.interface';
+import { VendorsService } from 'src/vendors/vendors.service';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 
 @Injectable()
 export class StockService {
@@ -16,9 +19,10 @@ export class StockService {
     @InjectRepository(StockEntity)
     private stockRepository: Repository<StockEntity>,
     private cardsService: CardsService,
+    private vendorService: VendorsService,
   ) {}
 
-  findAll(): Promise<import('./interface/stock.interface').IStock[]> {
+  findAll(): Promise<IStock[]> {
     return this.stockRepository.find();
   }
 
@@ -32,7 +36,11 @@ export class StockService {
 
   async checkStock(inputStockDto: InputStockDto): Promise<IStock> {
     const _card: ICard = await this.cardsService.findOne(inputStockDto.cardId);
-
+    console.log('Card', _card);
+    const _vendor: IVendor = await this.vendorService.findOne(
+      inputStockDto.vendorId,
+    );
+    console.log('Vendor', _vendor);
     const inDatabase = await this.stockRepository.findOne({
       where: { card: { id: _card.id } },
     });
@@ -42,6 +50,7 @@ export class StockService {
         card: _card as CardEntity,
         quantity: inputStockDto.quantity,
         condition: ECondition.NearMint,
+        vendor: _vendor as VendorEntity,
       };
       this.create(newStockItem);
       console.log(

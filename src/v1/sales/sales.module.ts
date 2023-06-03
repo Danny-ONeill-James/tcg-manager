@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/system/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { CardEntity } from '../cards/entities/card.entity';
 import { SaleEntity } from './entities/sale.entity';
 import { SaleItemEntity } from './entities/saleItem.entity';
@@ -16,6 +17,7 @@ import { SalesService } from './sales.service';
       SaleItemEntity,
       TransactionEntity,
       UserEntity,
+      VendorEntity,
     ]),
   ],
   controllers: [SalesController],

@@ -1,4 +1,5 @@
-import { UserEntity } from 'src/system/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import {
   Column,
   Entity,
@@ -25,8 +26,8 @@ export class SaleEntity {
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   value: number;
 
-  @ManyToOne(() => UserEntity, (userEntity) => userEntity.sale)
-  user: UserEntity;
+  @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.sale)
+  vendor: UserEntity;
 
   @OneToMany(() => SaleItemEntity, (saleItemEntity) => saleItemEntity.sale)
   saleItem: SaleItemEntity[];

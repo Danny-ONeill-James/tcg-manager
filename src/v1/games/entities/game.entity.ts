@@ -20,5 +20,5 @@ export class GameEntity extends ParanoidEntity {
   image: string;
 
   @OneToMany(() => SeriesEntity, (seriesEntity) => seriesEntity.game)
-  series: SeriesEntity;
+  series: SeriesEntity[];
 }

@@ -62,7 +62,7 @@ export class PokemonCardsApiService {
       const seriesForSet: ISeries = await this.seriesService.findOneBySlug(
         item.series.replace(/[^a-zA-Z0-9 ]/g, ''),
       );
-      console.log('Item: ' + seriesForSet.name);
+
       const newSet: CreateSetDto = {
         name: item.name,
         slug: item.id,
@@ -119,23 +119,23 @@ export class PokemonCardsApiService {
         'X-Api-Key': process.env.POKEMON_TCG_IO_KEY,
       },
     };
-    let page = 1;
+    const page = 1;
     const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
 
-    let returnedData = await this.sendAxiosCall(url, config);
+    const returnedData = await this.sendAxiosCall(url, config);
 
     const inputSet = await this.setService.findOneBySlug(setSlug);
 
     this.CheckCards(returnedData, inputSet);
 
-    if (returnedData.count < returnedData.totalCount) {
-      console.log('There are more pages');
-      page++;
-      const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
+    // if (returnedData.count < returnedData.totalCount) {
+    //   console.log('There are more pages');
+    //   page++;
+    //   const url = `https://api.pokemontcg.io/v2/cards?q=set.id:${setSlug}&page=${page}`;
 
-      returnedData = await this.sendAxiosCall(url, config);
-      this.CheckCards(returnedData, inputSet);
-    }
+    //   returnedData = await this.sendAxiosCall(url, config);
+    //   this.CheckCards(returnedData, inputSet);
+    // }
 
     return returnedData;
   }
