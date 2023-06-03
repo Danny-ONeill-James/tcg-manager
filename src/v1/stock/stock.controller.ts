@@ -15,9 +15,12 @@ export class StockController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':cardId')
-  findOne(@Param('cardId') cardId: string): Promise<IStock> {
-    return this.stockService.findOne(cardId);
+  @Get(':userId/:cardSlug')
+  findOneCardFromUser(
+    @Param('userId') userId: string,
+    @Param('cardSlug') cardSlug: string,
+  ): Promise<IStock[]> {
+    return this.stockService.findOneCardFromUser(userId, cardSlug);
   }
 
   @UseGuards(AuthGuard)

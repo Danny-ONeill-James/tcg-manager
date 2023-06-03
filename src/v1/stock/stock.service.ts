@@ -28,10 +28,35 @@ export class StockService {
 
   async findOne(cardId: string): Promise<IStock> {
     const returnedCard = await this.cardsService.findOne(cardId);
-    console.log(await returnedCard);
+    console.log(returnedCard);
     return this.stockRepository.findOne({
       where: { card: returnedCard },
     });
+  }
+
+  async findOneCardFromUser(
+    _userId: string,
+    _cardSlug: string,
+  ): Promise<IStock[]> {
+    console.log('Input: Card', _cardSlug, 'UserId: ', _userId);
+    const returnedCard: CardEntity = await this.cardsService.findOneBySlug(
+      _cardSlug,
+    );
+    console.log('returned Card: ', returnedCard);
+    const returnedVendor: IVendor = await this.vendorService.findOneFromOwner(
+      _userId,
+      'PersonalCollection',
+    );
+    console.log('returned vendor: ', returnedVendor);
+    const returnedStockItems = await this.stockRepository.find({
+      where: {
+        card: returnedCard as CardEntity,
+        vendor: returnedVendor as VendorEntity,
+      },
+      relations: { card: true, vendor: true },
+    });
+    console.log('returned Stock: ', returnedStockItems);
+    return returnedStockItems;
   }
 
   async checkStock(inputStockDto: InputStockDto): Promise<IStock> {
@@ -45,7 +70,7 @@ export class StockService {
       where: { card: { id: _card.id } },
     });
 
-    if (!(await inDatabase)) {
+    if (!inDatabase) {
       const newStockItem: CreateStockDto = {
         card: _card as CardEntity,
         quantity: inputStockDto.quantity,
@@ -60,7 +85,7 @@ export class StockService {
           newStockItem.condition,
       );
     } else {
-      this.update(await inDatabase.id, inputStockDto.quantity);
+      this.update(inDatabase.id, inputStockDto.quantity);
       console.log('Found ' + _card.name + ', will update');
     }
 
