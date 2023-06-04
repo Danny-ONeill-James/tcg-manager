@@ -37,7 +37,7 @@ export class StockService {
     });
   }
 
-  async findOneCardFromUser(
+  async findStockFromCard(
     _userId: string,
     _cardSlug: string,
   ): Promise<IStock[]> {
