@@ -42,21 +42,22 @@ export class StockService {
     _cardSlug: string,
   ): Promise<IStock[]> {
     console.log('Input: Card', _cardSlug, 'UserId: ', _userId);
+
     const returnedCard: CardEntity = await this.cardRepository.findOne({
       where: { slug: _cardSlug },
     });
     console.log('returned Card: ', returnedCard);
-    const returnedVendor: IVendor = await this.vendorService.findOneFromOwner(
-      _userId,
-      'PersonalCollection',
-    );
+
+    const returnedVendor: IVendor = await this.vendorRepository.findOne({
+      where: { id: _userId, slug: 'PersonalCollection' },
+    });
     console.log('returned vendor: ', returnedVendor);
+
     const returnedStockItems = await this.stockRepository.find({
       where: {
         card: returnedCard as CardEntity,
         vendor: returnedVendor as VendorEntity,
       },
-      relations: { card: true, vendor: true },
     });
     console.log('returned Stock: ', returnedStockItems);
     return returnedStockItems;
