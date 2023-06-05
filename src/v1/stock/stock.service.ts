@@ -71,7 +71,12 @@ export class StockService {
 
     const returnedStockItems: IVendor = await this.cardRepository.findOne({
       where: { stock: { vendor: { user: { id: _userId } } } },
-      relations: { stock: { vendor: { user: true }, card: { stock: true } } },
+      relations: {
+        stock: {
+          vendor: { user: true },
+          card: { stock: true, set: { series: { game: true } } },
+        },
+      },
     });
 
     for (const element of returnedStockItems.stock) {

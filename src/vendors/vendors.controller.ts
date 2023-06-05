@@ -24,7 +24,7 @@ export class VendorsController {
   @UseGuards(AuthGuard)
   @Get('owner/:id')
   getWhereOwner(@Param('id') id: string) {
-    console.log('Id in controller 1: ' + id);
+    console.log('Id in controller: ' + id);
     return this.vendorService.getWhereOwner(id);
   }
 
