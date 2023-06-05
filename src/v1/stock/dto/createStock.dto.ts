@@ -7,4 +7,5 @@ export class CreateStockDto {
   vendor: VendorEntity;
   quantity: number;
   condition: ECondition;
+  stockItem: import('d:/Projects/ExtAeon/TCG Manager/tcg-manager-api/src/vendors/interfaces/vendor.interface').IVendor;
 }

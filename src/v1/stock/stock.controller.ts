@@ -24,10 +24,16 @@ export class StockController {
   }
 
   @UseGuards(AuthGuard)
-  @Post()
-  create(@Body() createStockDto: InputStockDto): Promise<IStock> {
-    console.log('Body: ' + JSON.stringify(createStockDto));
-    return null;
-    // return this.stockService.updateStockFromCard(createStockDto);
+  @Post('update/:userId/:cardSlug')
+  create(
+    @Param('userId') userId: string,
+    @Param('cardSlug') cardSlug: string,
+    @Body() createStockDto: InputStockDto[],
+  ): Promise<IStock[]> {
+    return this.stockService.updateStockFromCard(
+      userId,
+      cardSlug,
+      createStockDto,
+    );
   }
 }

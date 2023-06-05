@@ -10,6 +10,8 @@ import { CreateStockDto } from './dto/createStock.dto';
 import { InputStockDto } from './dto/inputStock.dto';
 import { StockEntity } from './entities/stock.entity';
 import { IStock } from './interface/stock.interface';
+import { Console } from 'console';
+import { IVendor } from 'src/vendors/interfaces/vendor.interface';
 
 @Injectable()
 export class StockService {
@@ -64,55 +66,62 @@ export class StockService {
   }
 
   async updateStockFromCard(
-    userId: string,
-    cardSlug: string,
-    updateStock: InputStockDto[],
+    _id: string,
+    _cardSlug: string,
+    _updateStock: InputStockDto[],
   ): Promise<IStock[]> {
     let stockItem = new CreateStockDto();
 
-    for (const element of updateStock) {
+    const returnedStockItems: IStock[] = await this.stockRepository.find({
+      where: {
+        card: { slug: _cardSlug },
+        vendor: { user: { id: _id } },
+      },
+      relations: { card: true, vendor: { user: true } },
+    });
+
+    if (returnedStockItems.length > 0) {
+      stockItem.vendor = returnedStockItems[0].vendor as VendorEntity;
+      stockItem.card = returnedStockItems[0].card;
+    }
+
+    for (const element of _updateStock) {
       stockItem.quantity = element.quantity;
       stockItem.condition = element.condition;
 
-      //Get Vendor
-      const vendor = await this.vendorService.findOneFromOwner(
-        userId,
-        'PersonalCollection',
-      );
-
-      stockItem.vendor = vendor as VendorEntity;
-
-      //Get Card
-      const card = await this.cardRepository.findOne({
-        where: { slug: cardSlug },
-      });
-      stockItem.card = card as CardEntity;
-
-      console.log('Stock Item Check: ');
-
-      //Check if already exsists
-      const found = stockItem.vendor.stock.find((item) => {
-        return (
-          stockItem.card.slug === cardSlug &&
-          item.condition === element.condition
-        );
+      const found = returnedStockItems.find((item) => {
+        return item.condition === stockItem.condition;
       });
 
       if (found) {
-        //to update
         if (element.quantity == 0) {
           this.delete(found.id);
         } else {
           this.update(found.id, found.condition, element.quantity);
         }
-
         console.log('Found Items: ', found);
       } else {
         this.create(stockItem);
-        console.log('No Stock Found');
+        console.log('Not Found');
       }
     }
 
+    //stockItem.card = element.card;
+    //stockItem.vendor = element.vendor as VendorEntity;
+
+    // if (found) {
+    //   //to update
+    //   if (element.quantity == 0) {
+    //     // this.delete(found.id);
+    //   } else {
+    //     // this.update(found.id, found.condition, element.quantity);
+    //   }
+    //   console.log('Found Items: ', found);
+    // } else {
+    //   //this.create(stockItem);
+    //   console.log('No Stock Found');
+    // }
+    // //console.log('Stock Item: ', stockItem);
     return null;
   }
 }
