@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { BinderModule } from './v1/binder/binder.module';
 import { CardsModule } from './v1/cards/cards.module';
 import { CardEntity } from './v1/cards/entities/card.entity';
 import { CommandModule } from './v1/command/command.module';
@@ -66,6 +67,7 @@ import { VendorsModule } from './vendors/vendors.module';
     UsersModule,
     MagicTheGatheringApiModule,
     VendorsModule,
+    BinderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
