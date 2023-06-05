@@ -20,13 +20,14 @@ export class StockController {
     @Param('userId') userId: string,
     @Param('cardSlug') cardSlug: string,
   ): Promise<IStock[]> {
-    return this.stockService.findOneCardFromUser(userId, cardSlug);
+    return this.stockService.findStockFromCard(userId, cardSlug);
   }
 
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() createStockDto: InputStockDto): Promise<IStock> {
     console.log('Body: ' + JSON.stringify(createStockDto));
-    return this.stockService.checkStock(createStockDto);
+    return null;
+    // return this.stockService.updateStockFromCard(createStockDto);
   }
 }
