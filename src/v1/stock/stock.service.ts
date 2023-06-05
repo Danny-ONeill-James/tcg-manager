@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CardsService } from '../cards/cards.service';
@@ -12,12 +12,23 @@ import { IStock } from './interface/stock.interface';
 import { IVendor } from 'src/vendors/interfaces/vendor.interface';
 import { VendorsService } from 'src/vendors/vendors.service';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
+import { SaleItemEntity } from '../sales/entities/saleItem.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { User } from 'src/users/users.service';
+import { IUser } from 'src/users/interfaces/user.interface';
 
 @Injectable()
 export class StockService {
   constructor(
     @InjectRepository(StockEntity)
     private stockRepository: Repository<StockEntity>,
+    @InjectRepository(VendorEntity)
+    private vendorRepository: Repository<VendorEntity>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+
+    @InjectRepository(CardEntity)
+    private cardRepository: Repository<CardEntity>,
     private cardsService: CardsService,
     private vendorService: VendorsService,
   ) {}
@@ -38,24 +49,13 @@ export class StockService {
     _userId: string,
     _cardSlug: string,
   ): Promise<IStock[]> {
-    console.log('Input: Card', _cardSlug, 'UserId: ', _userId);
-    const returnedCard: CardEntity = await this.cardsService.findOneBySlug(
-      _cardSlug,
-    );
-    console.log('returned Card: ', returnedCard);
-    const returnedVendor: IVendor = await this.vendorService.findOneFromOwner(
-      _userId,
-      'PersonalCollection',
-    );
-    console.log('returned vendor: ', returnedVendor);
-    const returnedStockItems = await this.stockRepository.find({
+    const returnedStockItems: IStock[] = await this.stockRepository.find({
       where: {
-        card: returnedCard as CardEntity,
-        vendor: returnedVendor as VendorEntity,
+        card: { slug: _cardSlug },
+        vendor: { user: { id: _userId } },
       },
       relations: { card: true, vendor: true },
     });
-    console.log('returned Stock: ', returnedStockItems);
     return returnedStockItems;
   }
 
