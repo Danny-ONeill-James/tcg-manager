@@ -99,29 +99,10 @@ export class StockService {
         } else {
           this.update(found.id, found.condition, element.quantity);
         }
-        console.log('Found Items: ', found);
       } else {
         this.create(stockItem);
-        console.log('Not Found');
       }
     }
-
-    //stockItem.card = element.card;
-    //stockItem.vendor = element.vendor as VendorEntity;
-
-    // if (found) {
-    //   //to update
-    //   if (element.quantity == 0) {
-    //     // this.delete(found.id);
-    //   } else {
-    //     // this.update(found.id, found.condition, element.quantity);
-    //   }
-    //   console.log('Found Items: ', found);
-    // } else {
-    //   //this.create(stockItem);
-    //   console.log('No Stock Found');
-    // }
-    // //console.log('Stock Item: ', stockItem);
     return null;
   }
 }
