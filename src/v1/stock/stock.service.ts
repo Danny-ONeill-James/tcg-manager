@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
-import { VendorsService } from 'src/vendors/vendors.service';
+import { IVendor } from 'src/vendors/interfaces/vendor.interface';
 import { Repository } from 'typeorm';
 import { CardsService } from '../cards/cards.service';
 import { CardEntity } from '../cards/entities/card.entity';
 import { ECondition } from '../cards/enums/quality.enum';
+import { ICard } from '../cards/interface/card.interface';
 import { CreateStockDto } from './dto/createStock.dto';
 import { InputStockDto } from './dto/inputStock.dto';
 import { StockEntity } from './entities/stock.entity';
 import { IStock } from './interface/stock.interface';
-import { Console } from 'console';
-import { IVendor } from 'src/vendors/interfaces/vendor.interface';
-import { ICard } from '../cards/interface/card.interface';
 
 @Injectable()
 export class StockService {
@@ -20,10 +18,10 @@ export class StockService {
     @InjectRepository(StockEntity)
     private stockRepository: Repository<StockEntity>,
     @InjectRepository(VendorEntity)
+    private vendorRepository: Repository<VendorEntity>,
     @InjectRepository(CardEntity)
     private cardRepository: Repository<CardEntity>,
     private cardsService: CardsService,
-    private vendorService: VendorsService,
   ) {}
 
   findAll(): Promise<IStock[]> {
@@ -109,6 +107,13 @@ export class StockService {
     if (returnedStockItems.length > 0) {
       stockItem.vendor = returnedStockItems[0].vendor as VendorEntity;
       stockItem.card = returnedStockItems[0].card;
+    } else {
+      stockItem.vendor = await this.vendorRepository.findOne({
+        where: { user: { id: _id } },
+      });
+      stockItem.card = await this.cardRepository.findOne({
+        where: { slug: _cardSlug },
+      });
     }
 
     for (const element of _updateStock) {
@@ -126,7 +131,9 @@ export class StockService {
           this.update(found.id, found.condition, element.quantity);
         }
       } else {
-        this.create(stockItem);
+        if (element.quantity != 0) {
+          this.create(stockItem);
+        }
       }
     }
     return null;
