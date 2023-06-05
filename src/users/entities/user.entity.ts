@@ -3,6 +3,7 @@ import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { VendorUsersEntity } from 'src/vendors/entities/vendor.users.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { EAccountType } from '../enums/accountTypes.enum';
+import { BinderEntity } from 'src/v1/binder/entities/binder.entity';
 
 @Entity({ name: 'User' })
 export class UserEntity extends ParanoidEntity {
