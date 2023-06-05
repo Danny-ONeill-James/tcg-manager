@@ -12,6 +12,7 @@ import { StockEntity } from './entities/stock.entity';
 import { IStock } from './interface/stock.interface';
 import { Console } from 'console';
 import { IVendor } from 'src/vendors/interfaces/vendor.interface';
+import { ICard } from '../cards/interface/card.interface';
 
 @Injectable()
 export class StockService {
@@ -63,6 +64,26 @@ export class StockService {
 
   async delete(_id: string) {
     return this.stockRepository.delete(_id);
+  }
+
+  async getCardListForUser(_userId: string): Promise<ICard[]> {
+    const cardList: ICard[] = [];
+
+    const returnedStockItems: IVendor = await this.cardRepository.findOne({
+      where: { stock: { vendor: { user: { id: _userId } } } },
+      relations: { stock: { vendor: { user: true }, card: { stock: true } } },
+    });
+
+    for (const element of returnedStockItems.stock) {
+      const isCardAlreadyInList = cardList.some(
+        (card) => card.id === element.card.id,
+      );
+      if (!isCardAlreadyInList) {
+        cardList.push(element.card);
+      }
+    }
+
+    return cardList;
   }
 
   async updateStockFromCard(
