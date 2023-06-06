@@ -24,7 +24,7 @@ export class BinderEntity {
   image: string;
 
   @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.binder)
-  vendor: UserEntity;
+  vendor: VendorEntity;
 
   @ManyToOne(
     () => StockInBinderEntity,

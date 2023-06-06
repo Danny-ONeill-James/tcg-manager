@@ -15,12 +15,8 @@ export class BinderController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':userId/:binderSlug')
-  getAllBindersForUser(
-    @Param('userId') userId: string,
-    @Param('binderSlug') binderSlug: string,
-  ): Promise<IBinder[]> {
-    return this.binderService.getAllBindersForUser(userId, binderSlug);
-    return null;
+  @Get(':userId')
+  getAllBindersForUser(@Param('userId') userId: string): Promise<IBinder[]> {
+    return this.binderService.getAllBindersForUser(userId);
   }
 }

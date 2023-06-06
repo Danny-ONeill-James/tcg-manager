@@ -15,9 +15,12 @@ export class BinderService {
     private vendorRepository: Repository<VendorEntity>,
   ) {}
 
-  getAllBindersForUser(userId: string, binderSlug: string): Promise<IBinder[]> {
-    throw new Error('Method not implemented.');
+  async getAllBindersForUser(userId: string): Promise<IBinder[]> {
+    return await this.binderRepository.find({
+      where: { vendor: { user: { id: userId } } },
+    });
   }
+
   async createBinder(userId: string): Promise<IBinder> {
     //Get user details
     const vendor: VendorEntity = await this.vendorRepository.findOne({
