@@ -4,7 +4,6 @@ import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { Repository } from 'typeorm';
 import { BinderEntity } from './entities/binder.entity';
 import { IBinder } from './interface/binder.interface';
-import { count } from 'console';
 
 @Injectable()
 export class BinderService {
@@ -14,6 +13,13 @@ export class BinderService {
     @InjectRepository(VendorEntity)
     private vendorRepository: Repository<VendorEntity>,
   ) {}
+
+  async getSingleBinder(userId: string, binderSlug: string): Promise<IBinder> {
+    return await this.binderRepository.findOne({
+      where: { slug: binderSlug, vendor: { user: { id: userId } } },
+      relations: { stockInBinder: true },
+    });
+  }
 
   async getAllBindersForUser(userId: string): Promise<IBinder[]> {
     return await this.binderRepository.find({
