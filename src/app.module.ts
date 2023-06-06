@@ -8,6 +8,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { BinderModule } from './v1/binder/binder.module';
+import { BinderEntity } from './v1/binder/entities/binder.entity';
+import { StockInBinderEntity } from './v1/binder/entities/stockInBinder.entity';
 import { CardsModule } from './v1/cards/cards.module';
 import { CardEntity } from './v1/cards/entities/card.entity';
 import { CommandModule } from './v1/command/command.module';
@@ -39,6 +42,7 @@ import { VendorsModule } from './vendors/vendors.module';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [
+        BinderEntity,
         CardEntity,
         GameEntity,
         SaleEntity,
@@ -46,6 +50,7 @@ import { VendorsModule } from './vendors/vendors.module';
         SeriesEntity,
         SetEntity,
         StockEntity,
+        StockInBinderEntity,
         TransactionEntity,
         UserEntity,
         VendorEntity,
@@ -66,6 +71,7 @@ import { VendorsModule } from './vendors/vendors.module';
     UsersModule,
     MagicTheGatheringApiModule,
     VendorsModule,
+    BinderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

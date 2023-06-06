@@ -47,7 +47,11 @@ export class VendorsService {
       (vendor) => vendor.slug === vendorSlug,
     );
 
-    console.log('vendor in find one', returnedVendor);
+    const vendor = await this.vendorRepository.findOne({
+      where: { user: { id: _userId } },
+    });
+
+    console.log('Found Vendor: ', vendor);
 
     return returnedVendor;
   }

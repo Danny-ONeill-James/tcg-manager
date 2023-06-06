@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ICard } from '../cards/interface/card.interface';
 import { InputStockDto } from './dto/inputStock.dto';
 import { IStock } from './interface/stock.interface';
 import { StockService } from './stock.service';
@@ -13,6 +14,26 @@ export class StockController {
   findAll(): Promise<IStock[]> {
     return this.stockService.findAll();
   }
+  @UseGuards(AuthGuard)
+  @Get('getCardListForUser/:userId')
+  getCardListForUser(@Param('userId') userId: string) {
+    console.log('Here');
+    return this.stockService.getCardListForUser(userId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('update/:userId/:cardSlug')
+  create(
+    @Param('userId') userId: string,
+    @Param('cardSlug') cardSlug: string,
+    @Body() createStockDto: InputStockDto[],
+  ): Promise<IStock[]> {
+    return this.stockService.updateStockFromCard(
+      userId,
+      cardSlug,
+      createStockDto,
+    );
+  }
 
   @UseGuards(AuthGuard)
   @Get(':userId/:cardSlug')
@@ -20,13 +41,6 @@ export class StockController {
     @Param('userId') userId: string,
     @Param('cardSlug') cardSlug: string,
   ): Promise<IStock[]> {
-    return this.stockService.findOneCardFromUser(userId, cardSlug);
-  }
-
-  @UseGuards(AuthGuard)
-  @Post()
-  create(@Body() createStockDto: InputStockDto): Promise<IStock> {
-    console.log('Body: ' + JSON.stringify(createStockDto));
-    return this.stockService.checkStock(createStockDto);
+    return this.stockService.findStockFromCard(userId, cardSlug);
   }
 }

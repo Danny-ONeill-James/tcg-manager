@@ -1,4 +1,5 @@
 import { UserEntity } from 'src/users/entities/user.entity';
+import { BinderEntity } from 'src/v1/binder/entities/binder.entity';
 import { ParanoidEntity } from 'src/v1/common/entities/paranoid.entity';
 import { SaleEntity } from 'src/v1/sales/entities/sale.entity';
 import { StockEntity } from 'src/v1/stock/entities/stock.entity';
@@ -34,9 +35,12 @@ export class VendorEntity extends ParanoidEntity {
   @OneToMany(() => StockEntity, (stockEntity) => stockEntity.vendor)
   stock: StockEntity[];
 
+  @OneToMany(() => BinderEntity, (binderEntity) => binderEntity.vendor)
+  binder: BinderEntity[];
+
   @OneToMany(
     () => VendorUsersEntity,
     (vendorUserEntity) => vendorUserEntity.vendor,
   )
-  users: VendorUsersEntity;
+  users: VendorUsersEntity[];
 }

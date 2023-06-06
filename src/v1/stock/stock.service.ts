@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
-import { VendorsService } from 'src/vendors/vendors.service';
+import { IVendor } from 'src/vendors/interfaces/vendor.interface';
 import { Repository } from 'typeorm';
 import { CardsService } from '../cards/cards.service';
 import { CardEntity } from '../cards/entities/card.entity';
 import { ECondition } from '../cards/enums/quality.enum';
+import { ICard } from '../cards/interface/card.interface';
 import { CreateStockDto } from './dto/createStock.dto';
 import { InputStockDto } from './dto/inputStock.dto';
 import { StockEntity } from './entities/stock.entity';
@@ -17,10 +18,10 @@ export class StockService {
     @InjectRepository(StockEntity)
     private stockRepository: Repository<StockEntity>,
     @InjectRepository(VendorEntity)
+    private vendorRepository: Repository<VendorEntity>,
     @InjectRepository(CardEntity)
     private cardRepository: Repository<CardEntity>,
     private cardsService: CardsService,
-    private vendorService: VendorsService,
   ) {}
 
   findAll(): Promise<IStock[]> {
@@ -63,56 +64,78 @@ export class StockService {
     return this.stockRepository.delete(_id);
   }
 
+  async getCardListForUser(_userId: string): Promise<ICard[]> {
+    const cardList: ICard[] = [];
+
+    const returnedStockItems: IVendor = await this.cardRepository.findOne({
+      where: { stock: { vendor: { user: { id: _userId } } } },
+      relations: {
+        stock: {
+          vendor: { user: true },
+          card: { stock: true, set: { series: { game: true } } },
+        },
+      },
+    });
+
+    for (const element of returnedStockItems.stock) {
+      const isCardAlreadyInList = cardList.some(
+        (card) => card.id === element.card.id,
+      );
+      if (!isCardAlreadyInList) {
+        cardList.push(element.card);
+      }
+    }
+
+    return cardList;
+  }
+
   async updateStockFromCard(
-    userId: string,
-    cardSlug: string,
-    updateStock: InputStockDto[],
+    _id: string,
+    _cardSlug: string,
+    _updateStock: InputStockDto[],
   ): Promise<IStock[]> {
     let stockItem = new CreateStockDto();
 
-    for (const element of updateStock) {
+    const returnedStockItems: IStock[] = await this.stockRepository.find({
+      where: {
+        card: { slug: _cardSlug },
+        vendor: { user: { id: _id } },
+      },
+      relations: { card: true, vendor: { user: true } },
+    });
+
+    if (returnedStockItems.length > 0) {
+      stockItem.vendor = returnedStockItems[0].vendor as VendorEntity;
+      stockItem.card = returnedStockItems[0].card;
+    } else {
+      stockItem.vendor = await this.vendorRepository.findOne({
+        where: { user: { id: _id } },
+      });
+      stockItem.card = await this.cardRepository.findOne({
+        where: { slug: _cardSlug },
+      });
+    }
+
+    for (const element of _updateStock) {
       stockItem.quantity = element.quantity;
       stockItem.condition = element.condition;
 
-      //Get Vendor
-      const vendor = await this.vendorService.findOneFromOwner(
-        userId,
-        'PersonalCollection',
-      );
-
-      stockItem.vendor = vendor as VendorEntity;
-
-      //Get Card
-      const card = await this.cardRepository.findOne({
-        where: { slug: cardSlug },
-      });
-      stockItem.card = card as CardEntity;
-
-      console.log('Stock Item Check: ');
-
-      //Check if already exsists
-      const found = stockItem.vendor.stock.find((item) => {
-        return (
-          stockItem.card.slug === cardSlug &&
-          item.condition === element.condition
-        );
+      const found = returnedStockItems.find((item) => {
+        return item.condition === stockItem.condition;
       });
 
       if (found) {
-        //to update
         if (element.quantity == 0) {
           this.delete(found.id);
         } else {
           this.update(found.id, found.condition, element.quantity);
         }
-
-        console.log('Found Items: ', found);
       } else {
-        this.create(stockItem);
-        console.log('No Stock Found');
+        if (element.quantity != 0) {
+          this.create(stockItem);
+        }
       }
     }
-
     return null;
   }
 }
