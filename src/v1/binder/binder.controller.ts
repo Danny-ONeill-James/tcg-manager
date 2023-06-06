@@ -10,11 +10,8 @@ export class BinderController {
 
   @UseGuards(AuthGuard)
   @Post(':userId')
-  create(
-    @Param('userId') userId: string,
-    @Body() createBinderDto: InputBinderDto[],
-  ): Promise<IBinder> {
-    return this.binderService.createBinder(userId, createBinderDto);
+  create(@Param('userId') userId: string): Promise<IBinder> {
+    return this.binderService.createBinder(userId);
   }
 
   @UseGuards(AuthGuard)
