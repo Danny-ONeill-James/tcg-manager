@@ -15,6 +15,16 @@ export class BinderController {
   }
 
   @UseGuards(AuthGuard)
+  @Post('addStockToBinder/:userId/:binderSlug/:cardSlug')
+  addStockToBinder(
+    @Param('userId') userId: string,
+    @Param('binderSlug') binderSlugh: string,
+    @Param('cardSlug') cardSlug: string,
+  ): Promise<IBinder> {
+    return null;
+  }
+
+  @UseGuards(AuthGuard)
   @Get(':userId')
   getAllBindersForUser(@Param('userId') userId: string): Promise<IBinder[]> {
     return this.binderService.getAllBindersForUser(userId);
