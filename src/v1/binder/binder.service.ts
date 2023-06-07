@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VendorEntity } from 'src/vendors/entities/vendor.entity';
 import { Repository } from 'typeorm';
 import { BinderEntity } from './entities/binder.entity';
+import { StockInBinderEntity } from './entities/stockInBinder.entity';
 import { IBinder } from './interface/binder.interface';
 
 @Injectable()
@@ -10,6 +11,8 @@ export class BinderService {
   constructor(
     @InjectRepository(BinderEntity)
     private binderRepository: Repository<BinderEntity>,
+    @InjectRepository(StockInBinderEntity)
+    private stockInBinderRepository: Repository<StockInBinderEntity>,
     @InjectRepository(VendorEntity)
     private vendorRepository: Repository<VendorEntity>,
   ) {}
@@ -51,5 +54,39 @@ export class BinderService {
     this.binderRepository.save(newBinder);
 
     return newBinder as unknown as IBinder;
+  }
+
+  async updateStockInBinder(
+    userId: string,
+    binderSlug: string,
+    cardSlug: string,
+    quantity: number,
+  ): Promise<IBinder> {
+    //check if binder stock already exsists
+    const binderStockCheck = await this.stockInBinderRepository.find({
+      where: {
+        stock: { card: { slug: cardSlug } },
+        binder: { vendor: { user: { id: userId } } },
+      },
+    });
+    console.log('Binder Check: ', binderStockCheck);
+
+    if (binderStockCheck.length == 0) {
+      console.log('Did not find stock');
+      //Going to create the Stock In Binder
+
+      const binder: BinderEntity = await this.binderRepository.findOne({
+        where: { vendor: { user: { id: userId } }, slug: binderSlug },
+      });
+
+      const newBinderStock = this.stockInBinderRepository.create({
+        binder,
+      });
+
+      console.log('New Binder Stock: ', newBinderStock);
+    }
+
+    //return updated binder
+    return null;
   }
 }

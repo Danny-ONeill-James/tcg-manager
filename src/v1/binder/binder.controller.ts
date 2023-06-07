@@ -2,7 +2,6 @@ import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { BinderService } from './binder.service';
 import { IBinder } from './interface/binder.interface';
-import { UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('binder')
 export class BinderController {
@@ -15,12 +14,20 @@ export class BinderController {
   }
 
   @UseGuards(AuthGuard)
-  @Post('addStockToBinder/:userId/:binderSlug/:cardSlug')
-  addStockToBinder(
+  @Post('updateStockInBinder/:userId/:binderSlug/:cardSlug/:quantity')
+  updateStockInBinder(
     @Param('userId') userId: string,
-    @Param('binderSlug') binderSlugh: string,
+    @Param('binderSlug') binderSlug: string,
     @Param('cardSlug') cardSlug: string,
+    @Param('quantity') quantity: number,
   ): Promise<IBinder> {
+    return this.binderService.updateStockInBinder(
+      userId,
+      binderSlug,
+      cardSlug,
+      quantity,
+    );
+    console.log('Will Update stock in binder ');
     return null;
   }
 
