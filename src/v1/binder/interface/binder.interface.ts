@@ -1,7 +1,9 @@
-import { UserEntity } from 'src/users/entities/user.entity';
+import { VendorEntity } from 'src/vendors/entities/vendor.entity';
+import { StockInBinderEntity } from '../entities/stockInBinder.entity';
 
 export interface IBinder {
   id: string;
   name: string;
-  user: UserEntity;
+  vendor: VendorEntity;
+  stockInBinder?: StockInBinderEntity[];
 }
