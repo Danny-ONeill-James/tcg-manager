@@ -67,17 +67,19 @@ export class StockService {
   async getCardListForUser(_userId: string): Promise<ICard[]> {
     const cardList: ICard[] = [];
 
-    const returnedStockItems: IVendor = await this.cardRepository.findOne({
+    const returnedStockItems: IVendor = await this.vendorRepository.findOne({
       where: { stock: { vendor: { user: { id: _userId } } } },
       relations: {
         stock: {
           vendor: { user: true },
-          card: { stock: true, set: { series: { game: true } } },
+          card: { set: { series: { game: true } } },
         },
       },
     });
+    console.log('Found Vendor: ', returnedStockItems);
 
     for (const element of returnedStockItems.stock) {
+      console.log('Checking item');
       const isCardAlreadyInList = cardList.some(
         (card) => card.id === element.card.id,
       );
