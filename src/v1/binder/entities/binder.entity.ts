@@ -24,11 +24,11 @@ export class BinderEntity {
   image: string;
 
   @ManyToOne(() => VendorEntity, (vendorEntity) => vendorEntity.binder)
-  vendor: UserEntity;
+  vendor: VendorEntity;
 
-  @ManyToOne(
+  @OneToMany(
     () => StockInBinderEntity,
     (stockInBinderEntity) => stockInBinderEntity.binder,
   )
-  stockInBinder: StockInBinderEntity;
+  stockInBinder: StockInBinderEntity[];
 }
