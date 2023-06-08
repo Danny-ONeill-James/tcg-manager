@@ -49,6 +49,10 @@ export class StockService {
     return returnedStockItems;
   }
 
+  getCardListForUserSearch(userId: string, term: string): Promise<ICard[]> {
+    return null;
+  }
+
   async create(createStockDto: CreateStockDto) {
     const newStock = this.stockRepository.create({
       ...createStockDto,

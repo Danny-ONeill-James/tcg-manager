@@ -22,6 +22,16 @@ export class StockController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('getCardListForUser/:userId/:term')
+  getCardListForUserSearch(
+    @Param('userId') userId: string,
+    @Param('term') term: string,
+  ): Promise<ICard[]> {
+    console.log('Here');
+    return this.stockService.getCardListForUserSearch(userId, term);
+  }
+
+  @UseGuards(AuthGuard)
   @Post('update/:userId/:cardSlug')
   create(
     @Param('userId') userId: string,
