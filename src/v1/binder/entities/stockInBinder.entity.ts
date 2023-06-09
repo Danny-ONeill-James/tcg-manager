@@ -25,6 +25,6 @@ export class StockInBinderEntity {
   @ManyToOne(() => StockEntity, (stockEntity) => stockEntity.binder)
   stock: StockEntity;
 
-  @OneToMany(() => BinderEntity, (binderEntity) => binderEntity.stockInBinder)
-  binder: StockEntity;
+  @ManyToOne(() => BinderEntity, (binderEntity) => binderEntity.stockInBinder)
+  binder: BinderEntity;
 }
