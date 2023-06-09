@@ -7,6 +7,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
+    console.log('Testing Env: ', process.env.MYSQL_USERNAME);
     return this.appService.getHello();
   }
 }
